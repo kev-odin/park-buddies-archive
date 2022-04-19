@@ -6,7 +6,7 @@ RUN pip install email_validator flask flask-wtf flask-login flask-sqlalchemy req
 ### START BASE IMAGE ###
 FROM PYTHON:3.10-slim-buster as base
 RUN mkdir /app
-WORKDIR /appS
+WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 COPY ./ /app/
