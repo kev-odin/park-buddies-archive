@@ -1,37 +1,29 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-
-class RegisterForm(FlaskForm):
-    username = StringField(
-        "Username", validators=[DataRequired(), Length(min=4, max=16)]
-    )
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField(
-        "Password", validators=[DataRequired(), Length(min=6, max=16)]
-    )
-    confirm = PasswordField(
-        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
-    )
-    submit = SubmitField("Register")
-
-    def validate_username(self, username):
-        user = UserModel.query.filter_by(username=username.data).first()
-        if user:
-            raise ValidationError("Username already taken")
-
-    def validate_email(self, email):
-        email = UserModel.query.filter_by(email=email.data).first()
-        if email:
-            raise ValidationError("Email already taken")
+from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
 class LoginForm(FlaskForm):
-    username = StringField(
-        "Username", validators=[DataRequired(), Length(min=4, max=16)]
-    )
+    """
+    Form to collect existing user credentials. 
+    """
+    email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField(
-        "Password", validators=[DataRequired(), Length(min=6, max=16)]
+        label="Password", validators=[DataRequired(), Length(min=6, max=16)]
     )
-    remember = BooleanField("Remember")
+    remember = BooleanField("Remember Me")
     submit = SubmitField("Login")
+
+
+class RegisterForm(FlaskForm):
+    """
+    Form to collect new user information that will be added to the database.
+    """
+    email = StringField("Enter email", validators=[DataRequired(), Email()])
+    password_one = PasswordField(
+        "Enter password", validators=[DataRequired(), Length(min=6, max=16)]
+    )
+    password_two = PasswordField(
+        "Re-enter password", validators=[DataRequired(), EqualTo(password_one)]
+    )
+    submit = SubmitField(label="Register")

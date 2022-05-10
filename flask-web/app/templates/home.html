@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% set active_page = 'home' %}
+{% block title %} {{title}} {% endblock %}
+{% block content %}
+<div class="w-50">
+  <!-- <form method="post">
+    {{ form.csrf_token }}
+    
+    <div class="form-group">
+      <div class="mb-3">
+        <fieldset class="form-field">
+          {{ form.birthday.label(class="form-label") }}
+          {{ form.birthday(class="form-control") }}
+          {% if form.birthday.errors %}
+            <ul class="errors">
+              {% for error in form.birthday.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </fieldset>
+        <small class="form-text text-muted">Find people that share your birthday.</small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="mb-3">
+        <fieldset class="form-field">
+          {{ form.results.label(class="form-label") }}
+          {{ form.results(class="form-control") }}
+          {% if form.results.errors %}
+            <ul class="errors">
+              {% for error in form.results.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </fieldset>
+        <small class="form-text text-muted">Return the number of results.</small>
+      </div>
+    </div>
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+</div> -->
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Image</th>
+      <th scope="col">Name</th>
+      <th scope="col">Birth Year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- {% for entry in myData %}
+    <tr>
+      <td class="align-middle">{{ loop.index }}</td>
+      <td class="align-middle"><img src= {{ entry['thumbnail'] }} class="img-thumbnail" style="max-height:50px; max-width:50px;">
+      <td class="align-middle">{{ entry['text'] }}</td>			
+      <td class="align-middle">{{ entry['year'] }}</td>
+    </tr>
+    {% endfor %} -->
+  </tbody>
+</table>
+{% endblock %}
