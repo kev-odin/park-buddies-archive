@@ -6,7 +6,7 @@
 <title>{% block title %}{% endblock %}</title>
 </head>
   <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Park Buddies</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +18,7 @@
         {% if active_page == 'home' and current_user.is_authenticated %}
           {% set home_class = "active" %}
         {% elif not current_user.is_authenticated %}
-        {% set home_class = "disabled" %}
+          {% set home_class = "disabled" %}
         {% endif %}				
             <a class="nav-link {{ home_class }}" aria-current="page" href="/home">Home</a>
           </li>

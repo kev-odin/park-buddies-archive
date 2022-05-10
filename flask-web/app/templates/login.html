@@ -3,6 +3,16 @@
 {% block title %} {{title}} {% endblock %}
 {% block content %}
 
+<!-- Error Flashing -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<!-- Div class to center and align the login information -->
 <div class="d-flex align-items-center justify-content-center vh-100">
   <form method="post">
     {{ form.csrf_token }}
@@ -35,13 +45,6 @@
     {{ form.submit(class="btn btn-primary") }}
   </form>
   <br/>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for message in messages %}
-          {{ message }}
-        {% endfor %}
-    {% endif %}
-  {% endwith %}
 </div>
 
 <br/>
