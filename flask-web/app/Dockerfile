@@ -1,11 +1,6 @@
-### START CLASS IMAGE ###
-FROM python:3.10-slim-buster as class
-RUN pip install email_validator flask flask-wtf flask-login flask-sqlalchemy requests
-
 ### https://blog.tanka.la/2021/08/28/debugging-python-application-in-docker-using-vscode/ ###
 ### START BASE IMAGE ###
 FROM python:3.10-slim-buster as base
-RUN mkdir /app
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
