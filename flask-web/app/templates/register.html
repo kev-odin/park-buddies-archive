@@ -6,9 +6,9 @@
 <!-- Error Flashing -->
 {% with messages = get_flashed_messages() %}
 {% if messages %}
-    {% for message in messages %}
-      {{ message }}
-    {% endfor %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
 {% endif %}
 {% endwith %}
 
@@ -17,7 +17,7 @@
   <div class="w-25">
     <form method="post">
       {{ form.csrf_token }}
-      
+
       <div class="mb-3">
         <fieldset class="form-field">
           {{ form.email.label(class="form-label") }}
@@ -32,19 +32,19 @@
         </fieldset>
       </div>
       <div class="mb-3">
-      <fieldset class="form-field">
-        {{ form.password_one.label(class="form-label") }}
-        {{ form.password_one(class="form-control") }}
-        {{ form.password_two.label(class="form-label") }}
-        {{ form.password_two(class="form-control") }} 	
-      </fieldset>
+        <fieldset class="form-field">
+          {{ form.password_one.label(class="form-label") }}
+          {{ form.password_one(class="form-control") }}
+          {{ form.password_two.label(class="form-label") }}
+          {{ form.password_two(class="form-control") }}
+        </fieldset>
       </div>
       {{ form.submit(class="btn btn-danger") }}
     </form>
-    <br/>
+    <br />
   </div>
 </div>
 
-<br/>
+<br />
 <p class="top"> Already registered? <a class="bottom" href="{{ url_for('login') }}"> Login Here </a></p>
 {% endblock %}

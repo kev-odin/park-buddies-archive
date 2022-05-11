@@ -41,6 +41,11 @@ def home():
 def redirectToLogin():
     return redirect("/login")
 
+@app.route("/about")
+def about():
+    title = "About Us"
+    return render_template("about.html", title=title)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
