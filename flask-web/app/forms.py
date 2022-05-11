@@ -5,8 +5,9 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 class LoginForm(FlaskForm):
     """
-    Form to collect existing user credentials. 
+    Form to collect existing user credentials.
     """
+
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField(
         label="Password", validators=[DataRequired(), Length(min=6, max=16)]
@@ -19,6 +20,7 @@ class RegisterForm(FlaskForm):
     """
     Form to collect new user information that will be added to the database.
     """
+
     email = StringField("Enter email", validators=[DataRequired(), Email()])
     password_one = PasswordField(
         "Enter password", validators=[DataRequired(), Length(min=6, max=16)]

@@ -41,6 +41,7 @@ def home():
 def redirectToLogin():
     return redirect("/login")
 
+
 @app.route("/about")
 def about():
     title = "About Us"
