@@ -1,6 +1,7 @@
 import requests
 
-API_KEY = "rRScznr5cMqmr00eoeO61Xmc3FL9fB6o499OJqbf"
+# API_KEY = "rRScznr5cMqmr00eoeO61Xmc3FL9fB6o499OJqbf"
+API_KEY = "P8tQHRp3dvGMLzBQeXOwHQmi456Eyo3zgGpYI8Gw"
 STATE = "id"
 
 # endpoint = f"https://developer.nps.gov/api/v1/parks?stateCode={STATE}&api_key={API_KEY}"
