@@ -1,19 +1,21 @@
 import requests
 
-API_KEY = "rRScznr5cMqmr00eoeO61Xmc3FL9fB6o499OJqbf"
-STATE = "id"
+API_KEY = "?api_key=rRScznr5cMqmr00eoeO61Xmc3FL9fB6o499OJqbf"
 
-# endpoint = f"https://developer.nps.gov/api/v1/parks?stateCode={STATE}&api_key={API_KEY}"
-endpoint = f"https://developer.nps.gov/api/v1/webcams?limit=1000&api_key={API_KEY}"
+base_url = f"https://developer.nps.gov/api/v1/"
 
-
-response = requests.get(endpoint)
-data = response.json()
-parks = data["data"]
+response = requests.get(base_url)
 
 
-park_code = {}
-for entry in parks:
-    park_code[entry["parkCode"]] = (entry["states"], entry["fullName"])
+def activity_list():
+    activities_url = base_url + f"activities{API_KEY}"
+    response = requests.get(activities_url)
+    return response.json() 
 
-print(park_code)
+print(activity_list())
+
+def webcams():
+    pass
+
+def parks_info():
+    pass
