@@ -10,45 +10,61 @@ def _address_string(addresses: dict):
 
 def activities():
     """
-    Returns list of activities that can be enjoyed at every park
-    [activity_1, ...]
+    Returns dictionary of all activities codified by NPS
+    {activity_name : json}
     """
     request_url = base_url + "activities"
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
-    activites = [x["name"] for x in data]
+    activites = {x["name"]:x for x in data}
     return activites
 
 
-def webcams():
+def activities_parks():
     """
-    Returns list of active webcams at each park
-    [(webcam_title, url_link, related_parks)]
+    Returns dictionary of all activities that can be enjoyed at each park
+    {activity_name : json}
     """
-    params["limit"] = 500
-    request_url = base_url + "webcams"
+    request_url = base_url + "activities/parks"
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
-    webcams = [
-        (x["title"], x["url"], x["relatedParks"])
-        for x in data
-        if x["status"] == "Active"
-    ]
-    return webcams
+    activities_parks = {x["name"]:x for x in data}
+    return activities_parks
 
 
-def parks(state_code: str = "WA"):
+def parks(state_code: str = None):
     """
-    Returns a list of parks in a provided state
-    [(state_name, park_code, park_address, park_images)]
+    Returns a dictionary of parks in a provided state
+    {park_code : json}
     """
     request_url = base_url + "parks"
     params["stateCode"] = state_code
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
-    parks = [
-        (x["fullName"], x["parkCode"], _address_string(x["addresses"]), x["images"])
-        for x in data
-    ]
+    parks = {x["parkCode"]:x for x in data}
     return parks
 
+
+def webcams():
+    """
+    Returns dict of active webcams at each park
+    {park_code : json}
+    """
+    params["limit"] = 500
+    request_url = base_url + "webcams"
+    response = requests.get(request_url, params=params)
+    data = response.json()["data"]
+    webcams = {
+        x["relatedParks"][0]["parkCode"]:x
+        for x in data
+        if x["status"] == "Active" and x["relatedParks"]
+    }
+    return webcams
+
+
+if __name__ == "__main__":
+    test0 = activities()
+    test1 = activities_parks()
+    test2 = webcams() 
+    test3 = parks()
+    x = 0
