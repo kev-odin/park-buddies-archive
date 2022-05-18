@@ -32,14 +32,14 @@ def activities_parks():
     return activities_parks
 
 
-def parks(state_code: str = None, park_code: str = None):
+def parks(state_code: str = None, park_code: list = None):
     """
     Returns a dictionary of parks in a provided state
     {park_code : json}
     """
     request_url = base_url + "parks"
-    params["stateCode"] = state_code
     params["parkCode"] = park_code
+    params["stateCode"] = state_code
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
     parks = {x["parkCode"]: x for x in data}
@@ -62,20 +62,19 @@ def webcams():
     webcam_data = {
         x["relatedParks"][0]["parkCode"]: x
         for x in data
-        if x["status"] == "Active" and x["relatedParks"]
+        if x["status"] == "Active" and x["relatedParks"] and len(x["images"]) > 0
     }
     webcams = _webcam_scrub(webcam_data)
-
+    x = 0
     return webcams
 
 
 def _webcam_scrub(park_cams: dict):
     """Helper function to update related data for the Flask webpage"""
     for value in park_cams.items():
-        new_image = _webcam_image(value[0])
+        # new_image = _webcam_image(value[0])
         related = value[1].pop("relatedParks")[0]
-
-        park_cams[value[0]]["images"] = new_image
+        # park_cams[value[0]]["images"] = new_image
         park_cams[value[0]]["webpage"] = related.pop("url")
         park_cams[value[0]].update(related)
 
@@ -95,5 +94,5 @@ if __name__ == "__main__":
     # test0 = activities()
     # test1 = activities_parks()
     test2 = webcams()
-    # test3 = parks()
+
     x = 0
