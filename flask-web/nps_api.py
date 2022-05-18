@@ -63,6 +63,13 @@ def webcams():
         for x in data
         if x["status"] == "Active" and x["relatedParks"]
     }
+    
+    for value in webcams.items():
+        related = value[1].pop("relatedParks")[0]
+        webcams[value[0]]["webpage"] = related.pop("url")
+        webcams[value[0]].update(related)
+        z = 1
+
     return webcams
 
 
