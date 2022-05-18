@@ -42,6 +42,7 @@ def parks(state_code: str = None):
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
     parks = {x["parkCode"]:x for x in data}
+    x=0
     return parks
 
 
@@ -51,17 +52,18 @@ def webcams():
     {park_code : json}
     """
     # params["limit"] = 500
-    params["limit"] = 15 # test
+    params["limit"] = 500 # test
     request_url = base_url + "webcams"
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
     webcams = {
         x["relatedParks"][0]["parkCode"]:x
         for x in data
-        if x["status"] == "Active" and x["relatedParks"] and x["images"]
+        if x["status"] == "Active" and x["relatedParks"] and len(x["images"]) > 0
     }
-    # return webcams
-    print(webcams)
+    x=0
+    # print(webcams) # test for debug
+    return webcams
 
 
 if __name__ == "__main__":
