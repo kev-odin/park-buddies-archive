@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% set active_page = 'webcam' %}
+{% block title %} {{title}} {% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for key, value in cams.items() %}
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ value["title"] }}</h5>
+          <p class="card-text">{{ value["description"] }}</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">{{ value["webpage"] }}</small>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+{% endblock %}
