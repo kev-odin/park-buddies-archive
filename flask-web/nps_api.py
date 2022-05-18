@@ -45,7 +45,6 @@ def parks(state_code: str = None):
 
     for parkCode in parks.items():
         parks[parkCode[0]]["address"] = _address_string(parkCode[1]["addresses"][0])
-
     return parks
 
 

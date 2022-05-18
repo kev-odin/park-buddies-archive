@@ -2,7 +2,7 @@ from forms import LoginForm, RegisterForm
 from flask import Flask, render_template, request, redirect, flash
 from flask_login import login_user, login_required, logout_user
 from models import db, login, UserModel
-from nps_api import webcams
+from nps_api import webcams, parks
 
 
 app = Flask(__name__)
@@ -53,6 +53,10 @@ def webcam():
     title = "Active Park Webcams"
     return render_template("webcam.html", title=title, cams=webcams())
 
+@app.route("/parkbystate")
+def parkbystate():
+    title = "Park by State"
+    return render_template("parkbystate.html",title=title, myData = parks())
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

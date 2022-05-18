@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% set active_page = 'parkbystate' %} {% block title
+%} parkbystate {% endblock %} {% block content %}
+<table class="table table-striped">
+  <!-- below is copied from login.html  -->
+  <div class="w-50">
+    <form method="post">
+      {{ form.csrf_token }}
+      <div class="mb-3">
+        <fieldset class="form-field">
+          {{ form.date.label(class="form-label") }} {{
+          form.date(class="form-control") }} {% if form.date.errors %}
+          <ul class="errors">
+            {% for error in form.date.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </fieldset>
+      </div>
+
+      <div class="mb-3">
+        <fieldset class="form-field">
+          {{ form.searchNum.label(class="form-label") }} {{
+          form.searchNum(class="form-control") }}
+        </fieldset>
+      </div>
+      {{ form.submit(class="btn btn-primary") }}
+    </form>
+  </div>
+
+  <!-- The above is copied from login.html -->
+
+  <thead>
+    <tr>
+      <th scope="col">State</th>
+      <th scope="col">Park</th>
+      <th scope="col">latLong</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for park in myData %}
+    <tr>
+      <td class="align-middle">{{ park['states'] }}</td>
+      <td class="align-middle">
+        <img src= {{ park['images']['url'] }} class="img-thumbnail"
+        style="max-height:50px;max-width:50px;"> {{park['images']['caption']}}
+      </td>
+      <td class="align-middle">{{ park['latLong']}}</td>
+    </tr>
+
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
