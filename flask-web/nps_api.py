@@ -32,7 +32,7 @@ def activities_parks():
     return activities_parks
 
 
-def parks(state_code: str = None, park_code: list = None):
+def parks(state_code: str = None, park_code: str = None):
     """
     Returns a dictionary of parks in a provided state
     {park_code : json}
@@ -62,37 +62,31 @@ def webcams():
     webcam_data = {
         x["relatedParks"][0]["parkCode"]: x
         for x in data
-        if x["status"] == "Active" and x["relatedParks"] and len(x["images"]) > 0
+        if x["status"] == "Active" and x["relatedParks"]
     }
     webcams = _webcam_scrub(webcam_data)
-    x = 0
     return webcams
 
 
 def _webcam_scrub(park_cams: dict):
     """Helper function to update related data for the Flask webpage"""
-    for value in park_cams.items():
-        # new_image = _webcam_image(value[0])
-        related = value[1].pop("relatedParks")[0]
-        # park_cams[value[0]]["images"] = new_image
-        park_cams[value[0]]["webpage"] = related.pop("url")
-        park_cams[value[0]].update(related)
+    ref_parks = parks()
+    new_dict = {key:ref_parks[key] for key in park_cams.keys() if key in ref_parks}
+
+    for key, value in park_cams.items():
+        new_images = new_dict[key]["images"]
+        for image in new_images:
+            park_cams[key]["images"].append(image)
+
+        related = value.pop("relatedParks")[0]
+        park_cams[key]["webpage"] = related.pop("url")
+        park_cams[key].update(related)
 
     return park_cams
-
-
-def _webcam_image(park: str):
-    """
-    Helper function to get images for the active webcams.
-    """
-    result = parks(park_code=park).get(park)
-    image = result["images"][0]
-    return image
 
 
 if __name__ == "__main__":
     # test0 = activities()
     # test1 = activities_parks()
     test2 = webcams()
-
-    x = 0
+    test = 0
