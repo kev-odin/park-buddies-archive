@@ -42,6 +42,7 @@ def parks(state_code: str = None, park_code: str = None):
     Returns:
         dict: all parks listed in the US
     """
+    # params["limit"] = 500 # to test if we can get all the data back, default limit is 50
     request_url = base_url + "parks"
     params["parkCode"] = park_code
     params["stateCode"] = state_code
@@ -52,7 +53,6 @@ def parks(state_code: str = None, park_code: str = None):
     parks = {x["parkCode"]: x for x in data}
     for parkCode in parks.items():
         parks[parkCode[0]]["address"] = _address_string(parkCode[1]["addresses"][0])
-
     return parks
 
 
@@ -62,6 +62,11 @@ def webcams():
     Returns:
         dict: all activities codified by NPS with associated parks
     """
+    Returns dict of active webcams at each park
+    {park_code : json}
+    """
+    # params["limit"] = 500
+    params["limit"] = 500 # test
     request_url = base_url + "webcams"
     params["limit"] = 500
 
@@ -71,7 +76,7 @@ def webcams():
     webcam_data = {
         x["relatedParks"][0]["parkCode"]: x
         for x in data
-        if x["status"] == "Active" and x["relatedParks"]
+        if x["status"] == "Active" and x["relatedParks"] and len(x["images"]) > 0
     }
     webcams = _webcam_scrub(webcam_data)
 
