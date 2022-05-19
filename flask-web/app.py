@@ -1,7 +1,8 @@
 from forms import LoginForm, RegisterForm
-from flask import Flask, render_template, request, redirect, flash, url_for
-from flask_login import current_user, login_user, login_required, logout_user
+from flask import Flask, render_template, request, redirect, flash
+from flask_login import login_user, login_required, logout_user
 from models import db, login, UserModel
+from nps_api import webcams
 
 
 app = Flask(__name__)
@@ -46,6 +47,12 @@ def redirectToLogin():
 def about():
     title = "About Us"
     return render_template("about.html", title=title)
+
+
+@app.route("/webcam")
+def webcam():
+    title = "Active Park Webcams"
+    return render_template("webcam.html", title=title, cams=webcams())
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -96,12 +103,12 @@ def logout():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template("404.html"), 404
 
 
 @app.errorhandler(403)
 def access_denied(e):
-    return render_template('403.html'), 403
+    return render_template("403.html"), 403
 
 
 if __name__ == "__main__":
