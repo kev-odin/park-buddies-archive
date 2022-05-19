@@ -5,8 +5,9 @@
 
 <div class="jumbotron">
   <div class="container text-center">
-    <h1>Favorite National Parks</h1>
-    <p>I hope that I can find National Parks in my area.</p>
+    <h1>National Parks</h1>
+    <h2>at your service!</h2>
+      <!--
     <div class="input-group mb-3">
       <button type="button" class="btn btn-outline-secondary">Action</button>
       <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
@@ -24,26 +25,26 @@
       </ul>
       <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
     </div>
+    -->
   </div>
 </div>
 
 <div class="container-fluid bg-3 text-center">
-  <h3>Cool Services</h3><br>
   <div class="row">
     <div class="col-sm-4">
       <p>Activities</p>
       <img src="https://downloadfree3d.com/wp-content/uploads/2018/12/Tree.jpg" class="img-responsive"
-        style="width:100%" alt="Image">
+        style="height:300px" alt="itsa tree">
     </div>
     <div class="col-sm-4">
       <p>Parks by State</p>
-      <img src="https://downloadfree3d.com/wp-content/uploads/2018/12/Tree.jpg" class="img-responsive"
-        style="width:100%" alt="Image">
+      <img src="{{ url_for('static',filename='yakko_50states_384x384.jpg') }}" class="img-responsive"
+        style="height:300px" alt="yakko states">
     </div>
     <div class="col-sm-4">
-      <p>My Park List</p>
-      <img src="https://downloadfree3d.com/wp-content/uploads/2018/12/Tree.jpg" class="img-responsive"
-        style="width:100%" alt="Image">
+      <p><a href="{{  url_for('webcam') }}">Live Cams!</a></p>
+      <img src="{{ url_for('static',filename='monkey_selfie_555x555.jpg') }}" class="img-responsive"
+        style="height:300px" alt="monkey selfie">
     </div>
   </div>
 </div><br>
