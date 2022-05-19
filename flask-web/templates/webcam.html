@@ -3,21 +3,45 @@
 {% block title %} {{title}} {% endblock %}
 {% block content %}
 
-<div class="container">
-  <div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="container-fluid">
+  <div class="row row-cols-1 row-cols-md-4 g-3">
     {% for key, value in cams.items() %}
     <div class="col">
       <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">{{ value["title"] }}</h5>
-          <p class="card-text">{{ value["description"] }}</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">{{ value["webpage"] }}</small>
-          </div>
+        <div class="card-header text-center">
+          <b> {{ value["fullName"] }} </b>
+        </div>
+
+        <img src="{{ value["images"][0]["url"] }}" class="card-img-top" style="max-height:175px; max-width:500px;">
+
+        <ol class="list-group list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Webcam Description</div>
+              {{ value["title"] }}
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">State</div>
+              {{ value["states"] }}
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">Camera Status</div>
+              {{ value["status"] }}
+            </div>
+          </li>
+        </ol>
+
+        <div class="card-footer text-center">
+          <a href={{ value["webpage"] }} class="btn btn-warning">NPS Site</a>
+          <a href={{ value["url"] }} class="btn btn-primary">Webcam</a>
         </div>
       </div>
-    {% endfor %}
     </div>
+    {% endfor %}
   </div>
+</div>
 {% endblock %}
