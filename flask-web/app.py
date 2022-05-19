@@ -49,6 +49,12 @@ def about():
     return render_template("about.html", title=title)
 
 
+@app.route("/activities")
+def activities():
+    title = "Park Activities"
+    return render_template("activities.html", title=title)
+
+
 @app.route("/webcam")
 def webcam():
     title = "Active Park Webcams"
