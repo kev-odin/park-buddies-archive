@@ -37,6 +37,7 @@ def parks(state_code: str = None):
     Returns a dictionary of parks in a provided state
     {park_code : json}
     """
+    # params["limit"] = 500 # to test if we can get all the data back, default limit is 50
     request_url = base_url + "parks"
     params["stateCode"] = state_code
     response = requests.get(request_url, params=params)
