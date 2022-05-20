@@ -1,5 +1,9 @@
-{% extends "base.html" %} {% set active_page = 'parkbystate' %} {% block title
-%} Parkbystate {% endblock %} {% block header %} 
+<!DOCTYPE html>
+<html>
+{% extends "base.html" %} 
+{% set active_page = 'parkbystate' %} 
+{% block title %} Parkbystate {% endblock %} 
+{% block header %} 
 
 <style>
   #map {
@@ -23,7 +27,7 @@
               lng: -120.740135
           }]
       },
-      
+
   ];
 
   window.onload = function () {
