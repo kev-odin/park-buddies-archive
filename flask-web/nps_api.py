@@ -61,7 +61,7 @@ def webcams():
 
     Returns:
         dict: all activities codified by NPS with associated parks
-    """
+    
     Returns dict of active webcams at each park
     {park_code : json}
     """
