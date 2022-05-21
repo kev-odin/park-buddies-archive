@@ -11,58 +11,75 @@
 {% endwith %}
 
 <div class="container marketing">
-    <h1>About Us</h1>
-    <p>This is our web application for the TCSS 506 Capstone project. We decided that we wanted to build an application
-      that would help users find US National Parks.</p>
+  <h1>About Us</h1>
+  <p>This is our web application for the TCSS 506 Capstone project. We decided to build an application
+    that would help users find US National Parks.</p>
 </div>
-
 <div class="container marketing">
-
-  <!-- Three columns of text below the carousel -->
-  <div class="row">
-    <div class="col-lg-4">
-      <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
-        role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <title>Headshot</title>
-        <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-      </svg>
-
-      <h2>Kevin Chung</h2>
-      <p>I am really excited to complete the Graduate Certificate in Software Development and Engineering! My next steps
-        include finding a full-time SDE position and starting my CodePath Technical Interview Prep course over the
-        Summer.</p>
+  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">Kevin Chung</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title">Contribution</h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Example</li>
+            <li>Example</li>
+            <li>Example</li>
+            <li>Example</li>
+          </ul>
+          <a href="{{ url_for('webcam') }}" class="w-100 btn btn-lg btn-outline-primary" role="button">Active Webcams</a>
+        </div>
+      </div>
     </div>
-    <div class="col-lg-4">
-      <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
-        role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <title>Headshot</title>
-        <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-      </svg>
-
-      <h2>Xingguo Huang</h2>
-      <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">Xingguo Huang</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title">Contribution</h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Example</li>
+            <li>Example</li>
+            <li>Example</li>
+            <li>Example</li>
+          </ul>
+          <a href="{{ url_for('webcam') }}" class="w-100 btn btn-lg btn-outline-primary" role="button">Parks By State</a>
+        </div>
+      </div>
     </div>
-    <div class="col-lg-4">
-      <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
-        role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <title>Headshot</title>
-        <rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-      </svg>
-
-      <h2>JP Montagnet</h2>
-      <p>And lastly this, the third column of representative placeholder content.</p>
+    <div class="col">
+      <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+          <h4 class="my-0 fw-normal">JP Montagnet</h4>
+        </div>
+        <div class="card-body">
+          <h1 class="card-title">Contribution</h1>
+          <ul class="list-unstyled mt-3 mb-4">
+            <li>Example</li>
+            <li>Example</li>
+            <li>Example</li>
+            <li>Example</li>
+          </ul>
+          <a href="{{ url_for('webcam') }}" class="w-100 btn btn-lg btn-outline-primary" role="button">Park Activities</a>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <br>
-  <h2>Park Buddies - Stay updated with your National Parks</h2><br>
+  <div class="container marketing">
+    <h2>Park Buddies - Stay updated with your National Parks</h2>
 
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Get event updates on National Parks you follow.</li>
-    <li class="list-group-item">Search all US National Parks by State.</li>
-    <li class="list-group-item">Add US National Parks to your wishlist.</li>
-    <li class="list-group-item">Watch a live webcam feed directly from our service.</li>
-    <li class="list-group-item">Adventure On!</li>
-  </ul>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Search all US National Parks by State.</li>
+      <li class="list-group-item">Determine which activities are available.</li>
+      <li class="list-group-item">Watch a live webcam feed directly from our service.</li>
+      <li class="list-group-item">Adventure On!</li>
+    </ul>
+  </div>
 
-  {% endblock %}
+{% endblock %}

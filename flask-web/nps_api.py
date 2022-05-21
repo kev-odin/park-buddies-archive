@@ -61,14 +61,9 @@ def webcams():
 
     Returns:
         dict: all activities codified by NPS with associated parks
-    
-    Returns dict of active webcams at each park
-    {park_code : json}
     """
-    # params["limit"] = 500
-    params["limit"] = 500 # test
-    request_url = base_url + "webcams"
     params["limit"] = 500
+    request_url = base_url + "webcams"
 
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
