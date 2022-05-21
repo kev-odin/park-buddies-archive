@@ -19,14 +19,18 @@
       lng: -120.740135
   };
   var markersOnMap = [
-    
+
+    // why this for loop report bugs
+    {% for park in myData.values() %} 
       {
-          placeName: "Australia (Uluru)",
+          placeName: "{{park['fullName']}}",
           LatLng: [{
-              lat: 47.751076,
-              lng: -120.740135
+              lat: {{park['latitude']}},
+              lng: {{park['longitude']}}
           }]
       },
+      {% endfor %}
+      // why this for loop report bugs
 
   ];
 
@@ -36,8 +40,8 @@
 
   function addMarkerInfo() {
       for (var i = 0; i < markersOnMap.length; i++) {
-          var contentString = '<div id="content"><h1>' + markersOnMap[i].placeName +
-              '</h1><p>Lorem ipsum dolor sit amet, vix mutat posse suscipit id, vel ea tantas omittam detraxit.</p></div>';
+          var contentString = '<div id="content"><h5>' + markersOnMap[i].placeName +
+              '</h5><p>Lorem ipsum dolor sit amet, vix mutat posse suscipit id, vel ea tantas omittam detraxit.</p></div>';
 
           const marker = new google.maps.Marker({
               position: markersOnMap[i].LatLng[0],
@@ -54,16 +58,16 @@
               infowindow.open(marker.get('map'), marker);
               InforObj[0] = infowindow;
           });
-          // marker.addListener('mouseover', function () {
-          //     closeOtherInfo();
-          //     infowindow.open(marker.get('map'), marker);
-          //     InforObj[0] = infowindow;
-          // });
-          // marker.addListener('mouseout', function () {
-          //     closeOtherInfo();
-          //     infowindow.close();
-          //     InforObj[0] = infowindow;
-          // });
+          marker.addListener('mouseover', function () {
+              closeOtherInfo();
+              infowindow.open(marker.get('map'), marker);
+              InforObj[0] = infowindow;
+          });
+          marker.addListener('mouseout', function () {
+              closeOtherInfo();
+              infowindow.close();
+              InforObj[0] = infowindow;
+          });
       }
   }
 

@@ -63,7 +63,7 @@ def webcam():
 @app.route("/parkbystate")
 def parkbystate():
     title = "Park by State"
-    return render_template("parkbystate.html",title=title, myData = parks())
+    return render_template("parkbystate.html",title=title, myData = parks('WA')) # add WA for Saturday demo only
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
