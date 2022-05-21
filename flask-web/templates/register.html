@@ -13,12 +13,15 @@
 {% endwith %}
 
 <!-- Div class to center and align the login information -->
+
 <div class="d-flex align-items-center justify-content-center vh-100">
-  <div class="w-25">
+  <main class="form-signin w-50 m-auto">
     <form method="post">
       {{ form.csrf_token }}
 
-      <div class="mb-3">
+      <h1 class="h3 mb-3 fw-normal">{{ title }}</h1>
+
+      <div class="form-floating">
         <fieldset class="form-field">
           {{ form.email.label(class="form-label") }}
           {{ form.email(class="form-control") }}
@@ -31,18 +34,20 @@
           {% endif %}
         </fieldset>
       </div>
-      <div class="mb-3">
+
+      <div class="form-floating">
         <fieldset class="form-field">
           {{ form.password.label(class="form-label") }}
           {{ form.password(class="form-control") }}
         </fieldset>
       </div>
-      {{ form.submit(class="btn btn-danger") }}
+      <br>
+
+      {{ form.submit(class="w-25 btn btn-lg btn-danger") }}
+      <p class="mt-5 mb-3 text-muted">Already registered?</p>
+      <a class="bottom" href="{{ url_for('login') }}">Login Here</a>
     </form>
-    <br />
-  </div>
+  </main>
 </div>
 
-<br />
-<p class="top"> Already registered? <a class="bottom" href="{{ url_for('login') }}"> Login Here </a></p>
 {% endblock %}

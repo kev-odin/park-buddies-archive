@@ -14,39 +14,44 @@
 
 <!-- Div class to center and align the login information -->
 <div class="d-flex align-items-center justify-content-center vh-100">
-  <form method="post">
-    {{ form.csrf_token }}
+  <main class="form-signin w-50 m-auto">
+    <form method="post">
+      {{ form.csrf_token }}
 
-    <div class="mb-3">
-      <fieldset class="form-field">
-        {{ form.email.label(class="form-label") }}
-        {{ form.email(class="form-control") }}
-        {% if form.email.errors %}
-        <ul class="errors">
-          {% for error in form.email.errors %}
-          <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-      </fieldset>
-    </div>
+      <h1 class="h3 mb-3 fw-normal">{{ title }}</h1>
 
-    <div class="mb-3">
-      <fieldset class="form-field">
-        {{ form.password.label(class="form-label") }}
-        {{ form.password(class="form-control") }}
-      </fieldset>
-
-      <div class="form-check">
-        {{form.remember.label(class="form-check-label")}}
-        {{form.remember(class="form-check-input")}}
+      <div class="form-floating">
+        <fieldset class="form-field">
+          {{ form.email.label(class="form-label") }}
+          {{ form.email(class="form-control") }}
+          {% if form.email.errors %}
+          <ul class="errors">
+            {% for error in form.email.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </fieldset>
       </div>
-    </div>
-    {{ form.submit(class="btn btn-primary") }}
-  </form>
-  <br />
+
+      <div class="form-floating">
+        <fieldset class="form-field">
+          {{ form.password.label(class="form-label") }}
+          {{ form.password(class="form-control") }}
+        </fieldset>
+      </div>
+
+      <div class="checkbox mb-3">
+        <div class="form-check">
+          {{form.remember.label(class="form-check-label")}}
+          {{form.remember(class="form-check-input")}}
+        </div>
+      </div>
+      {{ form.submit(class="w-25 btn btn-lg btn-primary") }}
+      <p class="mt-5 mb-3 text-muted">Do you need an account?</p>
+      <a class="bottom" href="{{ url_for('register') }}">Create account</a>
+    </form>
+  </main>
 </div>
 
-<br />
-<p class="bottom">Do you need an account? <a class="bottom" href="{{ url_for('register') }}">Create account</a></p>
 {% endblock %}
