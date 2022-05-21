@@ -39,8 +39,9 @@ def home():
 
 
 @app.route("/")
-def redirectToLogin():
-    return redirect("/login")
+def index():
+    title = "Park Buddies"
+    return render_template("index.html", title=title)
 
 
 @app.route("/about")
