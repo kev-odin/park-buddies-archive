@@ -22,10 +22,11 @@ class RegisterForm(FlaskForm):
     """
 
     email = StringField("Enter email", validators=[DataRequired(), Email()])
-    password_one = PasswordField(
-        "Enter password", validators=[DataRequired(), Length(min=6, max=16)]
-    )
-    password_two = PasswordField(
-        "Re-enter password", validators=[DataRequired(), EqualTo(password_one)]
+    password = PasswordField(
+        "Enter password",
+        validators=[
+            DataRequired(),
+            Length(min=6, max=16),
+        ],
     )
     submit = SubmitField(label="Register")
