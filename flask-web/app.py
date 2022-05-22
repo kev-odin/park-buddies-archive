@@ -31,17 +31,17 @@ def create_table():
         add_user("lhhung@uw.edu", "qwerty")
 
 
+@app.route("/")
+def index():
+    title = "Park Buddies"
+    return render_template("index.html", title=title)
+
+
 @app.route("/home", methods=["GET", "POST"])
 @login_required
 def home():
     title = "Home App"
     return render_template("home.html", title=title)
-
-
-@app.route("/")
-def index():
-    title = "Park Buddies"
-    return render_template("index.html", title=title)
 
 
 @app.route("/about")
@@ -61,10 +61,14 @@ def webcam():
     title = "Active Park Webcams"
     return render_template("webcam.html", title=title, cams=webcams())
 
+
 @app.route("/parkbystate")
 def parkbystate():
     title = "Park by State"
-    return render_template("parkbystate.html",title=title, myData = parks('WA')) # add WA for Saturday demo only
+    return render_template(
+        "parkbystate.html", title=title, myData=parks("WA")
+    )  # add WA for Saturday demo only
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
