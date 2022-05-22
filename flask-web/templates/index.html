@@ -14,9 +14,11 @@
 
 <div class="container marketing px-4 py-5">
   <h2 class="pb-2 border-bottom text-center">Start Exploring on Park Buddies Today</h2>
+  <p>The National Park System of the United States is the collection of physical properties owned or administered by the National Park Service.
+    The collection includes all national parks and most national monuments, as well as several other types of protected areas of the United States. </p>
 </div>
 
-<div class="container px-4 py-5">
+<div class="container">
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
@@ -26,39 +28,35 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-          preserveAspectRatio="xMidYMid slice" focusable="false">
-          <rect width="100%" height="100%" fill="#777" />
-        </svg>
-
+        <img
+          src="https://www.nps.gov/olym/learn/photosmultimedia/images/Lake-Crescent.jpg?maxwidth=1200&maxheight=1200&autorotate=false"
+          style="height:360px" class="d-block w-100">
         <div class="container">
           <div class="carousel-caption text-start">
             <h1>Example headline.</h1>
             <p>Some representative placeholder content for the first slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+            <p><a class="btn btn-lg btn-primary" href="{{url_for("register")}}">Sign up today</a></p>
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-          preserveAspectRatio="xMidYMid slice" focusable="false">
-          <rect width="100%" height="100%" fill="#777" />
+        <img
+          src="https://www.nps.gov/olym/planyourvisit/images/stream_river_mossy_hoh_rainforest_scenic_forest_floor_r_mckenna_march_2015.jpg?maxwidth=1200&maxheight=1200&autorotate=false"
+          style="height:360px" class="d-block w-100">
         </svg>
 
         <div class="container">
           <div class="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+            <h1>Learn about PC_LOAD_LETTER</h1>
+            <p>Read about the team behind Park Buddies</p>
+            <p><a class="btn btn-lg btn-primary" href="{{url_for("about")}}"> About Us </a></p>
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-          preserveAspectRatio="xMidYMid slice" focusable="false">
-          <rect width="100%" height="100%" fill="#777" />
-        </svg>
-
+        <img
+          src="https://www.nps.gov/olym/planyourvisit/images/AndersonGlacierTrail.jpg?maxwidth=650&autorotate=false&quality=78&format=webp"
+          style="height:360px" class="d-block w-100">
         <div class="container">
           <div class="carousel-caption text-end">
             <h1>One more for good measure.</h1>
@@ -77,82 +75,26 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-</div>
+</div><br>
 
 <div class="container" id="icon-grid">
-  <h2 class="pb-2 border-bottom">Technology</h2>
-
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
-    <div class="col d-flex align-items-start">
-      <div class="card" style="width: 18rem;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/110px-Python-logo-notext.svg.png" class="card-img-top" style="height:50px; width:50px;">
-        <div class="card-body">
-          <h5 class="card-title">Python</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
+  <h2 class="pb-2 border-bottom text-center">Technology</h2>
+  <div class="container-fluid">
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+      {% for key, value in tech.items() %}
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-header text-center">
+            <b> {{ key }} </b>
+          </div>
+          <div class="card card-block h-100 flex-column justify-content-center">
+            <img src="{{ tech[key] }}" class="card-img-center mx-auto d-block" style="max-width: 200px; max-height: 150px;">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col d-flex align-items-start">
-      <div class="card" style="width: 18rem;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Flask_logo.svg/460px-Flask_logo.svg.png" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title">Flask</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col d-flex align-items-start">
-      <div class="card" style="width: 18rem;">
-        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/Docker_logo.svg/512px-Docker_logo.svg.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Docker</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col d-flex align-items-start">
-      <div class="card" style="width: 18rem;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/320px-Nginx_logo.svg.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Nginx</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col d-flex align-items-start">
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Bootstrap_logo.svg/301px-Bootstrap_logo.svg.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Bootstrap</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col d-flex align-items-start">
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_of_the_United_States_National_Park_Service.svg/184px-Logo_of_the_United_States_National_Park_Service.svg.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">National Park Service</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col d-flex align-items-start">
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Gunicorn_logo_2010.svg/320px-Gunicorn_logo_2010.svg.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Gunicorn</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content.</p>
-        </div>
-      </div>
+      {% endfor %}
     </div>
   </div>
+
 </div>
 {% endblock %}
