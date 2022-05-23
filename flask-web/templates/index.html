@@ -18,6 +18,7 @@
     The collection includes all national parks and most national monuments, as well as several other types of protected areas of the United States. </p>
 </div>
 
+<!-- Carousel of Park Images -->
 <div class="container">
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -33,9 +34,9 @@
           style="height:360px" class="d-block w-100">
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p>Some representative placeholder content for the first slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="{{url_for("register")}}">Sign up today</a></p>
+            <h1>Adventure Onwards!</h1>
+            <p>Explore US National Parks</p>
+            <p><a class="btn btn-lg btn-primary" href="{{url_for("register")}}">Register Here</a></p>
           </div>
         </div>
       </div>
@@ -49,7 +50,7 @@
           <div class="carousel-caption">
             <h1>Learn about PC_LOAD_LETTER</h1>
             <p>Read about the team behind Park Buddies</p>
-            <p><a class="btn btn-lg btn-primary" href="{{url_for("about")}}"> About Us </a></p>
+            <p><a class="btn btn-lg btn-primary" href="{{url_for("about")}}">About Us</a></p>
           </div>
         </div>
       </div>
@@ -60,8 +61,8 @@
         <div class="container">
           <div class="carousel-caption text-end">
             <h1>One more for good measure.</h1>
-            <p>Some representative placeholder content for the third slide of this carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+            <p>Register here to explore your National Parks!</p>
+            <p><a class="btn btn-lg btn-primary" href="{{url_for("register")}}">Register Here</a></p>
           </div>
         </div>
       </div>
@@ -77,6 +78,7 @@
   </div>
 </div><br>
 
+<!-- Technology Grid Items -->
 <div class="container" id="icon-grid">
   <h2 class="pb-2 border-bottom text-center">Technology</h2>
   <div class="container-fluid">
@@ -88,7 +90,7 @@
             <b> {{ key }} </b>
           </div>
           <div class="card card-block h-100 flex-column justify-content-center">
-            <img src="{{ tech[key] }}" class="card-img-center mx-auto d-block" style="max-width: 200px; max-height: 150px;">
+            <img src="{{ value }}" class="card-img-center mx-auto d-block" style="max-width: 200px; max-height: 150px;">
           </div>
         </div>
       </div>
