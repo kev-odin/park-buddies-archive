@@ -51,7 +51,18 @@ def index():
 @login_required
 def home():
     title = "Home App"
-    return render_template("home.html", title=title)
+    services = {
+        "Activities": {
+            "image": "yakko_50states_384x384.jpg",
+            "btn": "Find your activities",
+        },
+        "Parks by State": {
+            "image": "goofy_camping_500x500.jpg",
+            "btn": "Find your parks",
+        },
+        "Webcams": {"image": "monkey_selfie_555x555.jpg", "btn": "Observe your parks"},
+    }
+    return render_template("home.html", title=title, services=services)
 
 
 @app.route("/about")

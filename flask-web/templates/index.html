@@ -3,15 +3,6 @@
 {% block title %} {{title}} {% endblock %}
 {% block content %}
 
-<!-- Error Flashing -->
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-{{ message }}
-{% endfor %}
-{% endif %}
-{% endwith %}
-
 <div class="container marketing px-4 py-5">
   <h2 class="pb-2 border-bottom text-center">Start Exploring on Park Buddies Today</h2>
   <p>The National Park System of the United States is the collection of physical properties owned or administered by the National Park Service.

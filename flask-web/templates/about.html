@@ -2,13 +2,6 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for msg in messages %}
-<p>{{ msg }}</p>
-{% endfor %}
-{% endif %}
-{% endwith %}
 
 <div class="container marketing px-4 py-5">
   <h2 class="pb-2 border-bottom">About Us</h2>
