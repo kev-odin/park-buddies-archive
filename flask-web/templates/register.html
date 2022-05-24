@@ -25,23 +25,29 @@
         <fieldset class="form-field">
           {{ form.email.label(class="form-label") }}
           {{ form.email(class="form-control") }}
-          {% if form.email.errors %}
-          <ul class="errors">
-            {% for error in form.email.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
+          {% for error in form.email.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
         </fieldset>
-      </div>
-
+      </div><br>
       <div class="form-floating">
         <fieldset class="form-field">
           {{ form.password.label(class="form-label") }}
           {{ form.password(class="form-control") }}
+          {% for error in form.password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
         </fieldset>
-      </div>
-      <br>
+      </div><br>
+      <div class="form-floating">
+        <fieldset class="form-field">
+          {{ form.password2.label(class="form-label") }}
+          {{ form.password2(class="form-control") }}
+          {% for error in form.password2.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </fieldset>
+      </div><br>
 
       {{ form.submit(class="w-25 btn btn-lg btn-danger") }}
       <p class="mt-5 mb-3 text-muted">Already registered?</p>

@@ -1,6 +1,6 @@
 from forms import LoginForm, RegisterForm
-from flask import Flask, render_template, request, redirect, flash
-from flask_login import login_user, login_required, logout_user
+from flask import Flask, render_template, request, redirect, flash, url_for
+from flask_login import current_user, login_user, login_required, logout_user
 from models import db, login, UserModel
 from nps_api import webcams, parks
 
@@ -61,18 +61,21 @@ def about():
 
 
 @app.route("/activities")
+@login_required
 def activities():
     title = "Park Activities"
     return render_template("activities.html", title=title)
 
 
 @app.route("/webcam")
+@login_required
 def webcam():
     title = "Active Park Webcams"
     return render_template("webcam.html", title=title, cams=webcams())
 
 
 @app.route("/parkbystate")
+@login_required
 def parkbystate():
     title = "Park by State"
     return render_template(
@@ -101,8 +104,11 @@ def login():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     title = "Registration Page"
-    form = RegisterForm()
 
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
+
+    form = RegisterForm()
     if form.validate_on_submit():
         if request.method == "POST":
             email = request.form["email"]
@@ -111,10 +117,10 @@ def register():
             if user is None:
                 add_user(email, password)
                 flash("Registration Completed!")
-                return redirect("/login")
+                return redirect(url_for("login"))
             elif user is not None and user.check_password(password):
                 login_user(user)
-                return redirect("/home")
+                return redirect(url_for("home"))
             else:
                 flash("Email has already been taken. Please try another email.")
     return render_template("register.html", title=title, form=form)
