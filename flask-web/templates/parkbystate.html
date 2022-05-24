@@ -90,8 +90,35 @@
     }
   </script>
 
-  {% endblock %} {% block content %}
+  {% endblock %} {% block content %} //
+  <!-- The below is copied from hw3 birthday search home.html -->
+  <div class="w-50">
+    <form method="post">
+      {{ form.csrf_token }}
+      <div class="mb-3">
+        <fieldset class="form-field">
+          {{ form.date.label(class="form-label") }} {{
+          form.date(class="form-control") }} {% if form.date.errors %}
+          <ul class="errors">
+            {% for error in form.date.errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </fieldset>
+      </div>
 
+      <div class="mb-3">
+        <fieldset class="form-field">
+          {{ form.searchNum.label(class="form-label") }} {{
+          form.searchNum(class="form-control") }}
+        </fieldset>
+      </div>
+      {{ form.submit(class="btn btn-primary") }}
+    </form>
+  </div>
+  //
+  <!-- The above is copied from hw3 birthday search home.html -->
   <select
     class="form-select form-select-lg mb-3"
     aria-label=".form-select-lg example"

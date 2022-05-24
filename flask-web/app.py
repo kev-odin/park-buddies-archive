@@ -1,4 +1,4 @@
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, searchForm
 from flask import Flask, render_template, request, redirect, flash
 from flask_login import login_user, login_required, logout_user
 from models import db, login, UserModel
@@ -75,10 +75,15 @@ def webcam():
 @app.route("/parkbystate")
 def parkbystate():
     title = "Park by State"
-    return render_template(
-        "parkbystate.html", title=title, myData=parks("WA")
-    )  # add WA for Saturday demo only
+    form = searchForm()
+    if form.validate_on_submit():
+        if request.method == "POST":
+            state = request.form["state"]
+            return render_template(
+                "parkbystate.html", title=title, myData=parks(state), form=form
+            )  # add WA for Saturday demo only
 
+    return render_template("parkbystate.html", form=form)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

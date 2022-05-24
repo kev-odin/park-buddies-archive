@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 
@@ -30,3 +30,7 @@ class RegisterForm(FlaskForm):
         ],
     )
     submit = SubmitField(label="Register")
+
+class searchForm(FlaskForm):
+    state = SelectField('Choose a state!', validators=DataRequired(), choices=[('Washington', 'WA'), ('Oregon', 'OR'), ('California', 'CA')])
+    submit = SubmitField("Search")
