@@ -44,7 +44,7 @@ def index():
         "Amazon Web Services": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png",
         "National Park Service": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_of_the_United_States_National_Park_Service.svg/184px-Logo_of_the_United_States_National_Park_Service.svg.png",
     }
-    return render_template("index.html", title=title, tech = technology_dict)
+    return render_template("index.html", title=title, tech=technology_dict)
 
 
 @app.route("/home", methods=["GET", "POST"])

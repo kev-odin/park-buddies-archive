@@ -23,10 +23,9 @@ class RegisterForm(FlaskForm):
 
     email = StringField("Enter email", validators=[DataRequired(), Email()])
     password = PasswordField(
-        "Enter password",
-        validators=[DataRequired(), Length(min=6, max=16)]
+        "Enter password", validators=[DataRequired(), Length(min=6, max=16)]
     )
     password2 = PasswordField(
-        'Repeat Password',
-        validators=[DataRequired(), EqualTo('password')])
+        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
+    )
     submit = SubmitField(label="Register")
