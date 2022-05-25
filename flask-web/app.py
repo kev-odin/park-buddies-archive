@@ -103,7 +103,7 @@ def settings():
     title = "User Settings"
     id = UserModel.query.get_or_404(current_user.id)
     form = SettingsForm()
-    return render_template("settings.html", title=title, user=current_user.state)
+    return render_template("settings.html", title=title, user=current_user)
 
 
 @app.route("/parkbystate")

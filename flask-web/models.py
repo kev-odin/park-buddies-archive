@@ -31,7 +31,7 @@ class UserModel(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f"{self.id} | {self.email}"
+        return f"{self.id} | {self.state} | {self.email}"
 
 
 @login.user_loader
