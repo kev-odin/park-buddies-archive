@@ -1,4 +1,4 @@
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, RegisterForm, SettingsForm
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from models import db, login, UserModel
@@ -14,12 +14,18 @@ db.init_app(app)
 login.init_app(app)
 
 
-def add_user(email, password):
-    # check if email or username exits
+def add_user(email, password, state):
     user = UserModel()
     user.set_password(password)
     user.email = email
+    user.state = state
     db.session.add(user)
+    db.session.commit()
+
+
+def change_password(email, password):
+    user = UserModel.query.filter_by(email=email).first()
+    user.set_password(password)
     db.session.commit()
 
 
@@ -28,7 +34,7 @@ def create_table():
     db.create_all()
     user = UserModel.query.filter_by(email="lhhung@uw.edu").first()
     if user is None:
-        add_user("lhhung@uw.edu", "qwerty")
+        add_user("lhhung@uw.edu", "qwerty", "WA")
 
 
 @app.route("/")
@@ -89,6 +95,15 @@ def activities():
 def webcam():
     title = "Active Park Webcams"
     return render_template("webcam.html", title=title, cams=webcams())
+
+
+@app.route("/settings", methods=["GET", "POST"])
+@login_required
+def settings():
+    title = "User Settings"
+    id = UserModel.query.get_or_404(current_user.id)
+    form = SettingsForm()
+    return render_template("settings.html", title=title, user=current_user.state)
 
 
 @app.route("/parkbystate")

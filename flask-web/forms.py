@@ -26,6 +26,24 @@ class RegisterForm(FlaskForm):
         "Enter password", validators=[DataRequired(), Length(min=6, max=16)]
     )
     password2 = PasswordField(
-        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
+        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
     )
     submit = SubmitField(label="Register")
+
+
+class SettingsForm(FlaskForm):
+    """
+    Form to change existing user settings.
+    """
+
+    old_password = PasswordField(
+        label="Current Password", validators=[DataRequired(), Length(min=6, max=16)]
+    )
+    new_password = PasswordField(
+        label="New Password", validators=[DataRequired(), Length(min=6, max=16)]
+    )
+    verify_password = PasswordField(
+        label="Confirm Password", validators=[DataRequired(), Length(min=6, max=16)]
+    )
+
+    submit = SubmitField("Change Password")
