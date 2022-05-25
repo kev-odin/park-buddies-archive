@@ -55,12 +55,18 @@ def home():
         "Activities": {
             "image": "yakko_50states_384x384.jpg",
             "btn": "Find your activities",
+            "endpoint": "activities",
         },
         "Parks by State": {
             "image": "goofy_camping_500x500.jpg",
             "btn": "Find your parks",
+            "endpoint": "parkbystate",
         },
-        "Webcams": {"image": "monkey_selfie_555x555.jpg", "btn": "Observe your parks"},
+        "Webcams": {
+            "image": "monkey_selfie_555x555.jpg",
+            "btn": "Observe your parks",
+            "endpoint": "webcam",
+        },
     }
     return render_template("home.html", title=title, services=services)
 
