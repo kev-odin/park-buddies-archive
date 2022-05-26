@@ -1,21 +1,9 @@
 {% extends "base.html" %}
-{% set active_page = 'register' %}
 {% block title %} {{title}} {% endblock %}
 {% block content %}
 
-<!-- Error Flashing -->
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-danger" role="alert">
-  {{ message }}
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
 <!-- Div class to center and align the login information -->
-<div class="d-flex align-items-center justify-content-center vh-100">
+<div class="d-flex align-items-center justify-content-center">
   <main class="form-signin w-50 m-auto">
     <form method="post">
       {{ form.csrf_token }}
@@ -26,33 +14,24 @@
         <fieldset class="form-field">
           {{ form.email.label(class="form-label") }}
           {{ form.email(class="form-control") }}
-          {% if form.email.errors %}
-          {% for error in form.email.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-          {% endif %}
         </fieldset>
       </div><br>
+      
+      {{ form.state.label(class="form-label") }}
+      {{ form.state(class="form-select") }}
+      <br>
+
       <div class="form-floating">
         <fieldset class="form-field">
           {{ form.password.label(class="form-label") }}
           {{ form.password(class="form-control") }}
-          {% if form.password.errors %}
-          {% for error in form.password.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-          {% endif %}
         </fieldset>
       </div><br>
+
       <div class="form-floating">
         <fieldset class="form-field">
           {{ form.password2.label(class="form-label") }}
           {{ form.password2(class="form-control") }}
-          {% if form.password2.errors %}
-          {% for error in form.password2.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-          {% endif %}
         </fieldset>
       </div><br>
 

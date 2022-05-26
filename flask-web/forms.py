@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
+from app_lists import STATE_LIST
 
 
 class LoginForm(FlaskForm):
@@ -22,6 +23,7 @@ class RegisterForm(FlaskForm):
     """
 
     email = StringField("Enter email", validators=[DataRequired(), Email()])
+    state = SelectField("Select state", choices=STATE_LIST, validators=[DataRequired()])
     password = PasswordField(
         "Enter password", validators=[DataRequired(), Length(min=6, max=16)]
     )

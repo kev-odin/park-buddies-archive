@@ -127,7 +127,8 @@ def login():
             user = UserModel.query.filter_by(email=email).first()
             if user is not None and user.check_password(pw):
                 login_user(user)
-                return redirect("/home")
+                flash(f"Welcome to Park Buddies!")
+                return redirect(url_for("home"))
             elif user is not None and not user.check_password(pw):
                 flash(f"Incorrect email or password. Please try again.")
     return render_template("login.html", title=title, form=form)
@@ -145,10 +146,11 @@ def register():
         if request.method == "POST":
             email = request.form["email"]
             password = request.form["password"]
+            state = request.form["state"]
             user = UserModel.query.filter_by(email=email).first()
             if user is None:
-                add_user(email, password)
-                flash("Registration Completed!")
+                add_user(email, password, state)
+                flash("Registration successful.")
                 return redirect(url_for("login"))
             elif user is not None and user.check_password(password):
                 login_user(user)
@@ -161,7 +163,8 @@ def register():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect("/login")
+    flash("Logout successful.")
+    return redirect(url_for("login"))
 
 
 @app.errorhandler(404)
