@@ -23,7 +23,8 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           {% if current_user.is_authenticated %}
           <div class="btn-group">
-            <button type="button" class="btn btn-warning dropdown-toggle dropdown" data-bs-toggle="dropdown" aria-expanded="false">Services</button>
+            <button type="button" class="btn btn-warning dropdown-toggle dropdown" data-bs-toggle="dropdown"
+              aria-expanded="false">Services</button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="{{ url_for("home") }}">All Services</a></li>
               <li><a class="dropdown-item" href="{{ url_for("activities") }}">Activities</a></li>
@@ -57,16 +58,24 @@
 
   <!-- Message Flashing -->
   <div class="container marketing px-4 py-3">
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == "warning" %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
       {{ message }}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+    {% endif%}
+    {% if category == "success" %}
+    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif%}
     {% endfor %}
-  {% endif %}
-  {% endwith %}
+    {% endif %}
+    {% endwith %}
   </div>
 
   {% block content %}

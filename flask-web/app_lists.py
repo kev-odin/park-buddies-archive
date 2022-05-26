@@ -50,4 +50,3 @@ STATE_LIST = [
     ("WI", "Wisconsin"),
     ("WY", "Wyoming"),
 ]
-

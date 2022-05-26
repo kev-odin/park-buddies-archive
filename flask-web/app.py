@@ -127,10 +127,13 @@ def login():
             user = UserModel.query.filter_by(email=email).first()
             if user is not None and user.check_password(pw):
                 login_user(user)
-                flash(f"Welcome to Park Buddies!")
+                flash(f"Welcome to Park Buddies!", category="success")
                 return redirect(url_for("home"))
             elif user is not None and not user.check_password(pw):
-                flash(f"Incorrect email or password. Please try again.")
+                flash(
+                    f"Incorrect email or password. Please try again.",
+                    category="warning",
+                )
     return render_template("login.html", title=title, form=form)
 
 
@@ -150,20 +153,24 @@ def register():
             user = UserModel.query.filter_by(email=email).first()
             if user is None:
                 add_user(email, password, state)
-                flash("Registration successful.")
+                flash("Registration successful.", category="success")
                 return redirect(url_for("login"))
             elif user is not None and user.check_password(password):
                 login_user(user)
+                flash("Registered account found.", category="success")
                 return redirect(url_for("home"))
             else:
-                flash("Email has already been taken. Please try another email.")
+                flash(
+                    "Email has already been taken. Please try another email.",
+                    category="warning",
+                )
     return render_template("register.html", title=title, form=form)
 
 
 @app.route("/logout")
 def logout():
     logout_user()
-    flash("Logout successful.")
+    flash("Logout successful.", category="success")
     return redirect(url_for("login"))
 
 
