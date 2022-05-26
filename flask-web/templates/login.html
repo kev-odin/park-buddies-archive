@@ -3,19 +3,8 @@
 {% block title %} {{title}} {% endblock %}
 {% block content %}
 
-<!-- Error Flashing -->
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-danger" role="alert">
-  {{ message }}
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
 <!-- Div class to center and align the login information -->
-<div class="d-flex align-items-center justify-content-center vh-100">
+<div class="d-flex align-items-center justify-content-center">
   <main class="form-signin w-50 m-auto">
     <form method="post">
       {{ form.csrf_token }}
