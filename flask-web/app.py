@@ -1,4 +1,4 @@
-from forms import LoginForm, RegisterForm, SettingsForm
+from forms import LoginForm, RegisterForm, SettingsForm, searchForm
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from models import db, login, UserModel
@@ -106,7 +106,7 @@ def settings():
     return render_template("settings.html", title=title, user=current_user)
 
 
-@app.route("/parkbystate")
+@app.route("/parkbystate", methods=["GET", "POST"])
 @login_required
 def parkbystate():
     title = "Park by State"
@@ -115,10 +115,10 @@ def parkbystate():
         if request.method == "POST":
             state = request.form["state"]
             return render_template(
-                "parkbystate.html", title=title, myData=parks(state), form=form
+                "parkbystate.html", title=title, myData=parks(str(state)), form=form
             )  # add WA for Saturday demo only
 
-    return render_template("parkbystate.html", form=form)
+    return render_template("parkbystate.html", myData=parks(current_user.state[0]), form=form) # should we provide a default state? eg 'WA' or get the user's current state
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

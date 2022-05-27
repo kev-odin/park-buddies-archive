@@ -83,51 +83,30 @@
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 6,
+            zoom: 8,
             center: centerCords
         });
         addMarkerInfo();
     }
   </script>
 
-  {% endblock %} {% block content %} //
+  {% endblock %} {% block content %}
   <!-- The below is copied from hw3 birthday search home.html -->
   <div class="w-50">
     <form method="post">
       {{ form.csrf_token }}
       <div class="mb-3">
         <fieldset class="form-field">
-          {{ form.date.label(class="form-label") }} {{
-          form.date(class="form-control") }} {% if form.date.errors %}
-          <ul class="errors">
-            {% for error in form.date.errors %}
-            <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
+          {{ form.state.label(class="form-label") }} {{
+          form.state(class="form-control") }}
         </fieldset>
       </div>
 
-      <div class="mb-3">
-        <fieldset class="form-field">
-          {{ form.searchNum.label(class="form-label") }} {{
-          form.searchNum(class="form-control") }}
-        </fieldset>
-      </div>
       {{ form.submit(class="btn btn-primary") }}
     </form>
   </div>
-  //
+
   <!-- The above is copied from hw3 birthday search home.html -->
-  <select
-    class="form-select form-select-lg mb-3"
-    aria-label=".form-select-lg example"
-  >
-    <option selected>Pleae select a state</option>
-    <option value="WA">WA</option>
-    <option value="OR">OR</option>
-    <option value="CA">CA</option>
-  </select>
 
   <div class="accordion" id="accordionPanelsStayOpenExample">
     <div class="accordion-item">
