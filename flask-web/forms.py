@@ -34,7 +34,7 @@ class RegisterForm(FlaskForm):
 
 class searchForm(FlaskForm):
     # state = SelectField('Choose a state!', choices=['WA', 'OR', 'CA'], validators=[DataRequired()])
-    state = SelectField("Select state", choices=STATE_LIST, validators=[DataRequired()]) 
+    state = SelectField("Select state for details", choices=STATE_LIST, validators=[DataRequired()]) 
     submit = SubmitField(label="Search")
 
 class SettingsForm(FlaskForm):
