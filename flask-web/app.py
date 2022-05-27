@@ -100,10 +100,20 @@ def webcam():
 @app.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
+    # id = UserModel.query.get_or_404(current_user.id)
     title = "User Settings"
-    id = UserModel.query.get_or_404(current_user.id)
     form = SettingsForm()
-    return render_template("settings.html", title=title, user=current_user)
+
+    if form.validate_on_submit():
+        if request.method == "POST":
+            user = UserModel.query.filter_by(id = current_user.id).first()
+            user.state = request.form["state"]
+            db.session.commit()
+            return render_template(
+                "settings.html", title=title, user=current_user, form=form
+            )
+
+    return render_template("settings.html", title=title, user=current_user, form=form)
 
 
 @app.route("/parkbystate", methods=["GET", "POST"])
@@ -118,7 +128,10 @@ def parkbystate():
                 "parkbystate.html", title=title, myData=parks(str(state)), form=form
             )  # add WA for Saturday demo only
 
-    return render_template("parkbystate.html", myData=parks(current_user.state[0]), form=form) # should we provide a default state? eg 'WA' or get the user's current state
+    return render_template(
+        "parkbystate.html", myData=parks(current_user.state[0]), form=form
+    )  # should we provide a default state? eg 'WA' or get the user's current state
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
