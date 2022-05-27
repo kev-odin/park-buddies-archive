@@ -13,11 +13,11 @@
     var map;
     var InforObj = [];
     var centerCords = {
-        lat: 47.751076,
-        lng: -120.740135
+        lat: 41.500000,
+        lng: -100.000000
     };
-    var markersOnMap = [
 
+    var markersOnMap = [
       // why this for loop report bugs
       {% for park in myData.values() %}
         {
@@ -30,7 +30,6 @@
         },
         {% endfor %}
         // why this for loop report bugs
-
     ];
 
     window.onload = function () {
@@ -83,13 +82,12 @@
 
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 8,
+            zoom: 3,
             center: centerCords
         });
         addMarkerInfo();
     }
   </script>
-
   {% endblock %} {% block content %}
   <!-- The below is copied from hw3 birthday search home.html -->
   <div class="w-50">
