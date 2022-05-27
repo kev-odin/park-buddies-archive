@@ -32,24 +32,17 @@ class RegisterForm(FlaskForm):
     )
     submit = SubmitField(label="Register")
 
+
 class searchForm(FlaskForm):
     # state = SelectField('Choose a state!', choices=['WA', 'OR', 'CA'], validators=[DataRequired()])
     state = SelectField("Select state for details", choices=STATE_LIST, validators=[DataRequired()]) 
     submit = SubmitField(label="Search")
+
 
 class SettingsForm(FlaskForm):
     """
     Form to change existing user settings.
     """
 
-    old_password = PasswordField(
-        label="Current Password", validators=[DataRequired(), Length(min=6, max=16)]
-    )
-    new_password = PasswordField(
-        label="New Password", validators=[DataRequired(), Length(min=6, max=16)]
-    )
-    verify_password = PasswordField(
-        label="Confirm Password", validators=[DataRequired(), Length(min=6, max=16)]
-    )
-
-    submit = SubmitField("Change Password")
+    state = SelectField("Select state", choices=STATE_LIST, validators=[DataRequired()])
+    submit = SubmitField("Change state")
