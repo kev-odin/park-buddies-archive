@@ -2,21 +2,14 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for msg in messages %}
-<p>{{ msg }}</p>
-{% endfor %}
-{% endif %}
-{% endwith %}
 
-<div class="container marketing px-4 py-5">
+<div class="container marketing px-4 py-2">
   <h2 class="pb-2 border-bottom">About Us</h2>
     <p>This is our web application for the TCSS 506 Capstone project. We decided to build an application
     that would help users find US National Parks.</p>
 </div>
 
-<div class="container marketing px-4 py-5">
+<div class="container marketing px-4 py-2">
   <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
     <div class="col">
       <div class="card mb-4 rounded-3 shadow-sm">

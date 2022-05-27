@@ -1,6 +1,6 @@
-from forms import LoginForm, RegisterForm, searchForm
-from flask import Flask, render_template, request, redirect, flash
-from flask_login import login_user, login_required, logout_user
+from forms import LoginForm, RegisterForm, SettingsForm
+from flask import Flask, render_template, request, redirect, flash, url_for
+from flask_login import current_user, login_user, login_required, logout_user
 from models import db, login, UserModel
 from nps_api import webcams, parks
 
@@ -14,12 +14,18 @@ db.init_app(app)
 login.init_app(app)
 
 
-def add_user(email, password):
-    # check if email or username exits
+def add_user(email, password, state):
     user = UserModel()
     user.set_password(password)
     user.email = email
+    user.state = state
     db.session.add(user)
+    db.session.commit()
+
+
+def change_password(email, password):
+    user = UserModel.query.filter_by(email=email).first()
+    user.set_password(password)
     db.session.commit()
 
 
@@ -28,7 +34,7 @@ def create_table():
     db.create_all()
     user = UserModel.query.filter_by(email="lhhung@uw.edu").first()
     if user is None:
-        add_user("lhhung@uw.edu", "qwerty")
+        add_user("lhhung@uw.edu", "qwerty", "WA")
 
 
 @app.route("/")
@@ -44,14 +50,31 @@ def index():
         "Amazon Web Services": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png",
         "National Park Service": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_of_the_United_States_National_Park_Service.svg/184px-Logo_of_the_United_States_National_Park_Service.svg.png",
     }
-    return render_template("index.html", title=title, tech = technology_dict)
+    return render_template("index.html", title=title, tech=technology_dict)
 
 
 @app.route("/home", methods=["GET", "POST"])
 @login_required
 def home():
     title = "Home App"
-    return render_template("home.html", title=title)
+    services = {
+        "Activities": {
+            "image": "yakko_50states_384x384.jpg",
+            "btn": "Find your activities",
+            "endpoint": "activities",
+        },
+        "Parks by State": {
+            "image": "goofy_camping_500x500.jpg",
+            "btn": "Find your parks",
+            "endpoint": "parkbystate",
+        },
+        "Webcams": {
+            "image": "monkey_selfie_555x555.jpg",
+            "btn": "Observe your parks",
+            "endpoint": "webcam",
+        },
+    }
+    return render_template("home.html", title=title, services=services)
 
 
 @app.route("/about")
@@ -61,18 +84,30 @@ def about():
 
 
 @app.route("/activities")
+@login_required
 def activities():
     title = "Park Activities"
     return render_template("activities.html", title=title)
 
 
 @app.route("/webcam")
+@login_required
 def webcam():
     title = "Active Park Webcams"
     return render_template("webcam.html", title=title, cams=webcams())
 
 
+@app.route("/settings", methods=["GET", "POST"])
+@login_required
+def settings():
+    title = "User Settings"
+    id = UserModel.query.get_or_404(current_user.id)
+    form = SettingsForm()
+    return render_template("settings.html", title=title, user=current_user)
+
+
 @app.route("/parkbystate")
+@login_required
 def parkbystate():
     title = "Park by State"
     form = searchForm()
@@ -97,38 +132,51 @@ def login():
             user = UserModel.query.filter_by(email=email).first()
             if user is not None and user.check_password(pw):
                 login_user(user)
-                return redirect("/home")
+                flash(f"Welcome to Park Buddies!", category="success")
+                return redirect(url_for("home"))
             elif user is not None and not user.check_password(pw):
-                flash(f"Incorrect email or password. Please try again.")
+                flash(
+                    f"Incorrect email or password. Please try again.",
+                    category="warning",
+                )
     return render_template("login.html", title=title, form=form)
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     title = "Registration Page"
-    form = RegisterForm()
 
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
+
+    form = RegisterForm()
     if form.validate_on_submit():
         if request.method == "POST":
             email = request.form["email"]
             password = request.form["password"]
+            state = request.form["state"]
             user = UserModel.query.filter_by(email=email).first()
             if user is None:
-                add_user(email, password)
-                flash("Registration Completed!")
-                return redirect("/login")
+                add_user(email, password, state)
+                flash("Registration successful.", category="success")
+                return redirect(url_for("login"))
             elif user is not None and user.check_password(password):
                 login_user(user)
-                return redirect("/home")
+                flash("Registered account found.", category="success")
+                return redirect(url_for("home"))
             else:
-                flash("Email has already been taken. Please try another email.")
+                flash(
+                    "Email has already been taken. Please try another email.",
+                    category="warning",
+                )
     return render_template("register.html", title=title, form=form)
 
 
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect("/login")
+    flash("Logout successful.", category="success")
+    return redirect(url_for("login"))
 
 
 @app.errorhandler(404)

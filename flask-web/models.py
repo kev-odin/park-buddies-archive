@@ -14,6 +14,7 @@ class UserModel(UserMixin, db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
+    state = db.Column(db.String(2), unique=False, nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(), nullable=False)
 
@@ -30,7 +31,7 @@ class UserModel(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f"{self.id} | {self.email}"
+        return f"{self.id} | {self.state} | {self.email}"
 
 
 @login.user_loader

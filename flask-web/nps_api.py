@@ -42,10 +42,10 @@ def parks(state_code: str = None, park_code: str = None):
     Returns:
         dict: all parks listed in the US
     """
-    # params["limit"] = 500 # to test if we can get all the data back, default limit is 50
-    request_url = base_url + "parks"
+    params["limit"] = 500
     params["parkCode"] = park_code
     params["stateCode"] = state_code
+    request_url = base_url + "parks"
 
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
