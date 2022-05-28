@@ -31,6 +31,7 @@ def change_password(email, password):
 
 @app.before_first_request
 def create_table():
+    db.drop_all()
     db.create_all()
     user = UserModel.query.filter_by(email="lhhung@uw.edu").first()
     if user is None:
@@ -100,15 +101,27 @@ def webcam():
 @app.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings():
-    # id = UserModel.query.get_or_404(current_user.id)
     title = "User Settings"
     form = SettingsForm()
 
+    if request.method == "GET":
+        form.email.data = current_user.email
+        form.state.data = current_user.state
+
     if form.validate_on_submit():
         if request.method == "POST":
-            user = UserModel.query.filter_by(id = current_user.id).first()
-            user.state = request.form["state"]
-            db.session.commit()
+            user = UserModel.query.filter_by(id=current_user.id).first()
+            pw = request.form["password"]
+
+            if user.check_password(pw):
+                if request.form["state"] != user.state:
+                    flash("State changed successfully.", category="success")
+                    user.state = request.form["state"]
+                if request.form["email"] != user.email:
+                    flash("Email changed successfully.", category="success")
+                    user.email = request.form["email"]
+                db.session.commit()
+
             return render_template(
                 "settings.html", title=title, user=current_user, form=form
             )

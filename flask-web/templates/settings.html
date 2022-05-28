@@ -3,23 +3,29 @@
 {% block content %}
 
 <div class="container marketing px-4 py-3">
-    <h2 class="pb-2 border-bottom">User Settings</h2>
-    <p>Manage your Park Buddies account settings here. Change your state or delete your account on this page.</p>
-    <p>{{ user }}</p>
+  <h2 class="pb-2 border-bottom">User Settings</h2>
+  <p>Manage your Park Buddies account settings here. Change your state or delete your account on this page.</p>
+  <p>{{ user }}</p>
 </div>
 
 <div class="d-flex align-items-center justify-content-center">
-    <main class="form-signin w-50 m-auto">
-      <form method="post">
-        {{ form.csrf_token }}
-          
-        {{ form.state.label(class="form-label") }}
-        {{ form.state(class="form-select") }}
-        <br>
-        {{ form.submit(class="w-25 btn btn-lg btn-danger") }}
+  
+  <div class="form-signin w-50 m-auto">
+    <form method="post">
+      {{ form.csrf_token }}
+      {{ form.email.label(class="form-label") }}
+      {{ form.email(class="form-control") }}
+      <br>
+      {{ form.state.label(class="form-label") }}
+      {{ form.state(class="form-select") }}
+      <br>
+      {{ form.password.label(class="form-label") }}
+      {{ form.password(class="form-control") }}
+      <br>
+      {{ form.submit(class="w-25 btn btn-lg btn-danger") }}
 
-      </form>
-    </main>
+    </form>
   </div>
+</div>
 
 {% endblock %}
