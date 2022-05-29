@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
 from app_lists import STATE_LIST
 
 
@@ -35,7 +35,9 @@ class RegisterForm(FlaskForm):
 
 class searchForm(FlaskForm):
     # state = SelectField('Choose a state!', choices=['WA', 'OR', 'CA'], validators=[DataRequired()])
-    state = SelectField("Choose a State for Details", choices=STATE_LIST, validators=[DataRequired()]) 
+    state = SelectField(
+        "Choose a State for Details", choices=STATE_LIST, validators=[DataRequired()]
+    )
     submit = SubmitField(label="Search")
 
 
@@ -44,11 +46,10 @@ class SettingsForm(FlaskForm):
     Form to change existing user settings.
     """
 
-    email = StringField("Change email", validators=[Email()])
-    state = SelectField("Change state", choices=STATE_LIST, validators=[DataRequired()])
+    email = StringField("Change email", validators=[Email(), Optional()])
+    state = SelectField("Change state", choices=STATE_LIST, validators=[Optional()])
     new_password = PasswordField(
-        label="Change password",
-        validators=[Length(min=6, max=16)]
+        label="Change password", validators=[Length(min=6, max=16), Optional()]
     )
     password = PasswordField(
         label="Re-enter current password to confirm updates",

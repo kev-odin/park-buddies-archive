@@ -38,7 +38,7 @@
       {% if current_user.is_authenticated %}
       <div class="btn-group">
         <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" width="48" height="48" class="rounded">
+          <img src="{{ current_user.avatar(48) }}" width="48" height="48" class="rounded">
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
           <li><a class="dropdown-item" href="{{ url_for("home") }}"> Home </a></li>

@@ -120,17 +120,16 @@ def settings():
                 if request.form["email"] != user.email:
                     flash("Email changed successfully.", category="success")
                     user.email = request.form["email"]
-                if request.form["new_password"] is not None:
+                if request.form["new_password"]:
                     flash("Password changed successfully.", category="success")
                     password_change = request.form["new_password"]
                     user.set_password(password_change)
-
+                
                 db.session.commit()
-
+            
             return render_template(
                 "settings.html", title=title, user=current_user, form=form
             )
-
     return render_template("settings.html", title=title, user=current_user, form=form)
 
 
