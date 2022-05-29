@@ -46,8 +46,12 @@ class SettingsForm(FlaskForm):
 
     email = StringField("Change email", validators=[Email()])
     state = SelectField("Change state", choices=STATE_LIST, validators=[DataRequired()])
+    new_password = PasswordField(
+        label="Change password",
+        validators=[Length(min=6, max=16)]
+    )
     password = PasswordField(
-        label="Re-enter password to confirm updates",
+        label="Re-enter current password to confirm updates",
         validators=[DataRequired(), Length(min=6, max=16)],
     )
     submit = SubmitField("Update")
