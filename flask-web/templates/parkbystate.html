@@ -160,9 +160,32 @@
             data-bs-ride="carousel"
           >
             <div class="carousel-inner" align="center">
+              <div class="carousel-item active" data-bs-interval="5000">
+                <div class="card mb-3">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img
+                      src=https://www.nps.gov/common/uploads/structured_data/49F34094-B893-7DD6-5AE0F0220724B0EF.jpg
+                      class="img-fluid" style="max-height:150px;" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-text">Park's Full Name</h5>
+
+                        <p class="card-text">
+                          <small class="text-muted"
+                            >Park's Directions Info</small
+                          >
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {% for park in myData.values() %}
 
-              <div class="carousel-item active" data-bs-interval="50">
+              <div class="carousel-item" data-bs-interval="5000">
                 <div class="card mb-3">
                   <div class="row g-0">
                     <div class="col-md-4">
@@ -175,7 +198,7 @@
 
                         <p class="card-text">
                           <small class="text-muted"
-                            >Last updated 3 mins ago</small
+                            >{{park['directionsInfo']}}</small
                           >
                         </p>
                       </div>
