@@ -43,7 +43,8 @@
 
             const marker = new google.maps.Marker({
                 position: markersOnMap[i].LatLng[0],
-                map: map
+                map: map,
+                icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
             });
 
             const infowindow = new google.maps.InfoWindow({
@@ -51,21 +52,28 @@
                 maxWidth: 200
             });
 
-            marker.addListener('click', function () {
-                closeOtherInfo();
-                infowindow.open(marker.get('map'), marker);
-                InforObj[0] = infowindow;
-            });
-            // marker.addListener('mouseover', function () {
+            // google.maps.event.addListener(marker, "click", function() {
+            //     marker.setIcon('https://img.icons8.com/nolan/2x/marker.png'); // set image path here...
+
+            // });
+            // marker.addListener('click', function () {
             //     closeOtherInfo();
             //     infowindow.open(marker.get('map'), marker);
             //     InforObj[0] = infowindow;
+            //     marker.setIcon('https://img.icons8.com/nolan/2x/marker.png')
             // });
-            // marker.addListener('mouseout', function () {
-            //     closeOtherInfo();
-            //     infowindow.close();
-            //     InforObj[0] = infowindow;
-            // });
+            marker.addListener('mouseover', function () {
+                closeOtherInfo();
+                infowindow.open(marker.get('map'), marker);
+                InforObj[0] = infowindow;
+                marker.setIcon('https://img.icons8.com/nolan/2x/marker.png')
+            });
+            marker.addListener('mouseout', function () {
+                closeOtherInfo();
+                infowindow.close();
+                InforObj[0] = infowindow;
+                marker.setIcon('https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png')
+            });
         }
     }
 
@@ -94,13 +102,14 @@
     <form method="post">
       {{ form.csrf_token }}
       <h3>{{ form.state.label(class="form-label") }}</h3>
-      <div class="mb-3">
-        <div class="mb-3" style="float: left">
+
+      <div>
+        <div class="mb-3" , style="float: left">
           <fieldset class="form-field">
-            {{ form.state(class="form-select") }}
+            {{form.state(class="form-select") }}
           </fieldset>
         </div>
-        <div class="mb-3" style="float: right">
+        <div class="mb-3" , style="float: right">
           {{ form.submit(class="btn btn-primary") }}
         </div>
       </div>
@@ -120,7 +129,7 @@
           aria-expanded="false"
           aria-controls="panelsStayOpen-collapseOne"
         >
-          Accordion Item #1
+          Google map of parks by state
         </button>
       </h2>
       <div
@@ -129,7 +138,6 @@
         aria-labelledby="panelsStayOpen-headingOne"
       >
         <div class="accordion-body">
-          <h3>National park Maps</h3>
           <!--The div element for the map -->
           <div id="map"></div>
 
@@ -148,7 +156,7 @@
           aria-expanded="false"
           aria-controls="panelsStayOpen-collapseTwo"
         >
-          Accordion Item #2
+          Park view and directions
         </button>
       </h2>
       <div
@@ -251,7 +259,7 @@
           aria-expanded="false"
           aria-controls="panelsStayOpen-collapseThree"
         >
-          Accordion Item #3
+          List of parks and discriptions
         </button>
       </h2>
       <div
@@ -266,7 +274,8 @@
                 <th scope="col">Full Name</th>
                 <th scope="col">Thumbnail</th>
                 <th scope="col">Designation</th>
-                <th scope="col">escription</th>
+
+                <th scope="col">Description</th>
               </tr>
             </thead>
 
@@ -278,9 +287,7 @@
                   <img src= {{ park['images'][0]['url'] }} class="img-thumbnail"
                   style="max-height:100px;max-width:100px;">
                 </td>
-
                 <td class="align-middle">{{ park['designation']}}</td>
-
                 <td class="align-middle">{{ park['description']}}</td>
               </tr>
 
