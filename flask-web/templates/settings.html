@@ -3,13 +3,23 @@
 {% block content %}
 
 <div class="container marketing px-4 py-3">
-  <h2 class="pb-2 border-bottom">User Settings</h2>
-  <p>Manage your Park Buddies account settings here. Change your settings or delete your account on this page.</p>
-  <p>{{ user }}</p>
+  <h2 class="pb-2 border-bottom text-center">User Settings</h2>
+  <p>Manage your Park Buddies account settings here on this page.
+    Every user will have a unique robot avatar that is based on your
+    given email address. Verify changes with your current account password.
+  </p>
+  <div class="d-flex align-items-center justify-content-center text-center">
+    <div class="card" style="width: 20em">
+      <img src="{{ current_user.avatar(256) }}" class="card-img-top" style="width: 18em">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Current email:</b><br> {{ user.email }}</li>
+        <li class="list-group-item"><b>Current state:</b><br> {{ user.state }}</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <div class="d-flex align-items-center justify-content-center">
-  
   <div class="form-signin w-50 m-auto">
     <form method="post">
       {{ form.csrf_token }}

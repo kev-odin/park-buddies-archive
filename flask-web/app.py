@@ -124,9 +124,9 @@ def settings():
                     flash("Password changed successfully.", category="success")
                     password_change = request.form["new_password"]
                     user.set_password(password_change)
-                
+
                 db.session.commit()
-            
+
             return render_template(
                 "settings.html", title=title, user=current_user, form=form
             )
