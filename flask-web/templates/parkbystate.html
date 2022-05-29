@@ -56,16 +56,16 @@
                 infowindow.open(marker.get('map'), marker);
                 InforObj[0] = infowindow;
             });
-            marker.addListener('mouseover', function () {
-                closeOtherInfo();
-                infowindow.open(marker.get('map'), marker);
-                InforObj[0] = infowindow;
-            });
-            marker.addListener('mouseout', function () {
-                closeOtherInfo();
-                infowindow.close();
-                InforObj[0] = infowindow;
-            });
+            // marker.addListener('mouseover', function () {
+            //     closeOtherInfo();
+            //     infowindow.open(marker.get('map'), marker);
+            //     InforObj[0] = infowindow;
+            // });
+            // marker.addListener('mouseout', function () {
+            //     closeOtherInfo();
+            //     infowindow.close();
+            //     InforObj[0] = infowindow;
+            // });
         }
     }
 
@@ -93,14 +93,17 @@
   <div class="d-flex align-items-center justify-content-center">
     <form method="post">
       {{ form.csrf_token }}
+      <h3>{{ form.state.label(class="form-label") }}</h3>
       <div class="mb-3">
-        <fieldset class="form-field">
-          {{ form.state.label(class="form-label") }} {{
-          form.state(class="form-select") }}
-        </fieldset>
+        <div class="mb-3" style="float: left">
+          <fieldset class="form-field">
+            {{ form.state(class="form-select") }}
+          </fieldset>
+        </div>
+        <div class="mb-3" style="float: right">
+          {{ form.submit(class="btn btn-primary") }}
+        </div>
       </div>
-
-      {{ form.submit(class="btn btn-primary") }}
     </form>
   </div>
 
@@ -260,9 +263,10 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th scope="col">fullName</th>
-                <th scope="col">latLong</th>
-                <th scope="col">description</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Thumbnail</th>
+                <th scope="col">Designation</th>
+                <th scope="col">escription</th>
               </tr>
             </thead>
 
@@ -272,8 +276,11 @@
                 <td class="align-middle">{{ park['fullName'] }}</td>
                 <td class="align-middle">
                   <img src= {{ park['images'][0]['url'] }} class="img-thumbnail"
-                  style="max-height:50px;max-width:50px;"> {{park['latLong']}}
+                  style="max-height:100px;max-width:100px;">
                 </td>
+
+                <td class="align-middle">{{ park['designation']}}</td>
+
                 <td class="align-middle">{{ park['description']}}</td>
               </tr>
 
