@@ -11,57 +11,31 @@
 
 <div class="container marketing px-4 py-2">
   <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    {% for name, value in profile.items() %}
     <div class="col">
       <div class="card mb-4 rounded-3 shadow-sm">
         <div class="card-header py-3">
-          <h4 class="my-0 fw-normal">Kevin Chung</h4>
+          <h4 class="my-0 fw-normal"> <b>{{ name }}</b> </h4>
+        </div>
+        <div class="card card-block h-100 flex-column justify-content-center">
+          <img src="{{ value["gif"] }}" class="card-img-center mx-auto d-block" 
+          style="max-width: 18em; max-height: 15em;">
         </div>
         <div class="card-body">
-          <h1 class="card-title">Contribution</h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>Example</li>
-            <li>Example</li>
-            <li>Example</li>
-            <li>Example</li>
+          <h3 class="card-title">Features</h3>
+          <ul class="list-group list-group-flush">
+            {% for item in value["feat"] %}
+            <li class="list-group-item">{{ item }}</li>
+            {% endfor %}
           </ul>
-          <a href="{{ url_for('webcam') }}" class="w-100 btn btn-lg btn-outline-primary" role="button">Active Webcams</a>
+          <br>
+          <a href="{{ url_for(value["endpoint"]) }}" 
+            class="w-100 btn btn-lg btn-outline-danger"
+            role="button"> Webpage </a>
         </div>
       </div>
     </div>
-    <div class="col">
-      <div class="card mb-4 rounded-3 shadow-sm">
-        <div class="card-header py-3">
-          <h4 class="my-0 fw-normal">Xingguo Huang</h4>
-        </div>
-        <div class="card-body">
-          <h1 class="card-title">Contribution</h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>Example</li>
-            <li>Example</li>
-            <li>Example</li>
-            <li>Example</li>
-          </ul>
-          <a href="{{ url_for('webcam') }}" class="w-100 btn btn-lg btn-outline-primary" role="button">Parks By State</a>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="card mb-4 rounded-3 shadow-sm">
-        <div class="card-header py-3">
-          <h4 class="my-0 fw-normal">JP Montagnet</h4>
-        </div>
-        <div class="card-body">
-          <h1 class="card-title">Contribution</h1>
-          <ul class="list-unstyled mt-3 mb-4">
-            <li>Example</li>
-            <li>Example</li>
-            <li>Example</li>
-            <li>Example</li>
-          </ul>
-          <a href="{{ url_for('webcam') }}" class="w-100 btn btn-lg btn-outline-primary" role="button">Park Activities</a>
-        </div>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
 
@@ -69,10 +43,9 @@
     <h2 class="pb-2 border-bottom">Park Buddies - Stay updated with your National Parks</h2>
 
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Search all US National Parks by State.</li>
-      <li class="list-group-item">Determine which activities are available.</li>
-      <li class="list-group-item">Watch a live webcam feed directly from our service.</li>
-      <li class="list-group-item">Adventure On!</li>
+      {% for feature in site %}
+      <li class="list-group-item">{{ feature }}</li>
+      {% endfor %}
     </ul>
   </div>
 

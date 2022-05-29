@@ -23,12 +23,6 @@ def add_user(email, password, state):
     db.session.commit()
 
 
-def change_password(email, password):
-    user = UserModel.query.filter_by(email=email).first()
-    user.set_password(password)
-    db.session.commit()
-
-
 @app.before_first_request
 def create_table():
     db.drop_all()
@@ -81,7 +75,38 @@ def home():
 @app.route("/about")
 def about():
     title = "About Us"
-    return render_template("about.html", title=title)
+    profiles = {
+        "Kevin Chung": {
+            "gif": "https://media.giphy.com/media/l1J9DoKrzHMW8fP3O/giphy.gif",
+            "endpoint": "webcam",
+            "feat": [
+                "User login, registration, and setting pages",
+                "National Park API and webcam page",
+                "Docker and general Bootstrap templates",
+            ],
+        },
+        "Xingguo Huang": {
+            "gif": "https://media.giphy.com/media/1wh06XT53tPGw/giphy.gif",
+            "endpoint": "parkbystate",
+            "feat": ["Parks by state", "Map widget", "Image carousel"],
+        },
+        "JP Montagnet": {
+            "gif": "https://media.giphy.com/media/DfbpTbQ9TvSX6/giphy.gif",
+            "endpoint": "activities",
+            "feat": [
+                "Park activites",
+                "Multi-select query",
+                "Official in house Software dev",
+            ],
+        },
+    }
+    site = [
+        "Search all US National Parks by State.",
+        "Determine which activities are available.",
+        "Enjoy a live webcam feed directly with our service.",
+        "Make edits to your user profile.",
+    ]
+    return render_template("about.html", title=title, profile=profiles, site=site)
 
 
 @app.route("/activities")
