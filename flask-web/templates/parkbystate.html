@@ -18,19 +18,16 @@
     };
 
     var markersOnMap = [
-      // why this for loop report bugs
-      {% for park in myData.values() %}
-    {
-      placeName: "{{park['fullName']}}",
+{% for park in myData.values() %}
+      { placeName: "{{park['fullName']}}",
         text: "{{park['address']}}",
-          LatLng: [{
-            lat: {{ park['latitude']}},
-    lng: { { park['longitude'] } }
-              }]
-          },
-    {% endfor %}
-          // why this for loop report bugs
-      ];
+        LatLng: [{
+          lat: {{ park['latitude']}},
+          lng: {{ park['longitude']}}
+        }]
+      },
+{% endfor %}
+    ];
 
     window.onload = function () {
       initMap();
@@ -73,7 +70,6 @@
                   InforObj[0] = infowindow;
                   marker.setIcon('https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png')
               });
-          }
       }
     }
 
