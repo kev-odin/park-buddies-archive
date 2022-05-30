@@ -126,187 +126,188 @@
   </div>
 
   <!-- The above is copied from hw3 birthday search home.html -->
-
-  <div class="accordion" id="accordionPanelsStayOpenExample">
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-        <button
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#panelsStayOpen-collapseOne"
-          aria-expanded="false"
-          aria-controls="panelsStayOpen-collapseOne"
+  <div class="container marketing px-4 py-3">
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseOne"
+            aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseOne"
+          >
+            Google map of parks by state
+          </button>
+        </h2>
+        <div
+          id="panelsStayOpen-collapseOne"
+          class="accordion-collapse collapse"
+          aria-labelledby="panelsStayOpen-headingOne"
         >
-          Google map of parks by state
-        </button>
-      </h2>
-      <div
-        id="panelsStayOpen-collapseOne"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelsStayOpen-headingOne"
-      >
-        <div class="accordion-body">
-          <!--The div element for the map -->
-          <div id="map"></div>
+          <div class="accordion-body">
+            <!--The div element for the map -->
+            <div id="map"></div>
 
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Ydd4QD8Fz6hUnLwHN1Hs9_IvGyrX68k"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-Ydd4QD8Fz6hUnLwHN1Hs9_IvGyrX68k"></script>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-        <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#panelsStayOpen-collapseTwo"
-          aria-expanded="false"
-          aria-controls="panelsStayOpen-collapseTwo"
-        >
-          Park view and directions
-        </button>
-      </h2>
-      <div
-        id="panelsStayOpen-collapseTwo"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelsStayOpen-headingTwo"
-      >
-        <div class="accordion-body">
-          <div
-            id="carouselExampleDark"
-            class="carousel carousel-dark slide"
-            data-bs-ride="carousel"
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseTwo"
+            aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseTwo"
           >
-            <div class="carousel-inner" align="center">
-              <div class="carousel-item active" data-bs-interval="5000">
-                <div class="card mb-3">
-                  <div class="row g-0">
-                    <div class="col-md-4">
-                      <img
-                      src=https://www.nps.gov/common/uploads/structured_data/49F34094-B893-7DD6-5AE0F0220724B0EF.jpg
-                      class="img-fluid" style="max-height:150px;" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                      <div class="card-body">
-                        <h5 class="card-text">Park's Full Name</h5>
+            Park view and directions
+          </button>
+        </h2>
+        <div
+          id="panelsStayOpen-collapseTwo"
+          class="accordion-collapse collapse"
+          aria-labelledby="panelsStayOpen-headingTwo"
+        >
+          <div class="accordion-body">
+            <div
+              id="carouselExampleDark"
+              class="carousel carousel-dark slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner" align="center">
+                <div class="carousel-item active" data-bs-interval="5000">
+                  <div class="card mb-3">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img
+                        src=https://www.nps.gov/common/uploads/structured_data/49F34094-B893-7DD6-5AE0F0220724B0EF.jpg
+                        class="img-fluid" style="max-height:150px;" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-text">Park's Full Name</h5>
 
-                        <p class="card-text">
-                          <small class="text-muted"
-                            >Park's Directions Info</small
-                          >
-                        </p>
+                          <p class="card-text">
+                            <small class="text-muted"
+                              >Park's Directions Info</small
+                            >
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {% for park in myData.values() %}
+                {% for park in myData.values() %}
 
-              <div class="carousel-item" data-bs-interval="5000">
-                <div class="card mb-3">
-                  <div class="row g-0">
-                    <div class="col-md-4">
-                      <img src={{ park['images'][0]['url'] }} class="img-fluid"
-                      style="max-height:150px;" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                      <div class="card-body">
-                        <h5 class="card-text">{{park['fullName']}}</h5>
+                <div class="carousel-item" data-bs-interval="5000">
+                  <div class="card mb-3">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <img src={{ park['images'][0]['url'] }}
+                        class="img-fluid" style="max-height:150px;" alt="...">
+                      </div>
+                      <div class="col-md-8">
+                        <div class="card-body">
+                          <h5 class="card-text">{{park['fullName']}}</h5>
 
-                        <p class="card-text">
-                          <small class="text-muted"
-                            >{{park['directionsInfo']}}</small
-                          >
-                        </p>
+                          <p class="card-text">
+                            <small class="text-muted"
+                              >{{park['directionsInfo']}}</small
+                            >
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {% endfor %}
+                {% endfor %}
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleDark"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
-            <button
-              class="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExampleDark"
-              data-bs-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-              class="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExampleDark"
-              data-bs-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+          <button
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#panelsStayOpen-collapseThree"
+            aria-expanded="false"
+            aria-controls="panelsStayOpen-collapseThree"
+          >
+            List of parks and discriptions
+          </button>
+        </h2>
+        <div
+          id="panelsStayOpen-collapseThree"
+          class="accordion-collapse collapse"
+          aria-labelledby="panelsStayOpen-headingThree"
+        >
+          <div class="accordion-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Full Name</th>
+                  <th scope="col">Thumbnail</th>
+                  <th scope="col">Designation</th>
+
+                  <th scope="col">Description</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for park in myData.values() %}
+                <tr>
+                  <td class="align-middle">{{ park['fullName'] }}</td>
+                  <td class="align-middle">
+                    <img src= {{ park['images'][0]['url'] }}
+                    class="img-thumbnail"
+                    style="max-height:100px;max-width:100px;">
+                  </td>
+                  <td class="align-middle">{{ park['designation']}}</td>
+                  <td class="align-middle">{{ park['description']}}</td>
+                </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-        <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#panelsStayOpen-collapseThree"
-          aria-expanded="false"
-          aria-controls="panelsStayOpen-collapseThree"
-        >
-          List of parks and discriptions
-        </button>
-      </h2>
-      <div
-        id="panelsStayOpen-collapseThree"
-        class="accordion-collapse collapse"
-        aria-labelledby="panelsStayOpen-headingThree"
-      >
-        <div class="accordion-body">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Full Name</th>
-                <th scope="col">Thumbnail</th>
-                <th scope="col">Designation</th>
-
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {% for park in myData.values() %}
-              <tr>
-                <td class="align-middle">{{ park['fullName'] }}</td>
-                <td class="align-middle">
-                  <img src= {{ park['images'][0]['url'] }} class="img-thumbnail"
-                  style="max-height:100px;max-width:100px;">
-                </td>
-                <td class="align-middle">{{ park['designation']}}</td>
-                <td class="align-middle">{{ park['description']}}</td>
-              </tr>
-
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
   </div>
-
   {% endblock %}
 </html>
