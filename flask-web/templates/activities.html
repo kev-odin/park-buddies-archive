@@ -11,26 +11,17 @@
   or even just a quiet spot to watch birds, opportunities abound. </p>
 </div>
 
-<div class="jumbotron">
-  <div class="container text-center">
-    <div class="input-group mb-3">
-      <button type="button" class="btn btn-outline-secondary">Action</button>
-      <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
-        data-bs-toggle="dropdown" aria-expanded="false">
-        <span class="visually-hidden">Toggle Dropdown</span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Camping</a></li>
-        <li><a class="dropdown-item" href="#">Hiking</a></li>
-        <li><a class="dropdown-item" href="#">Fishing</a></li>
-        <li><a class="dropdown-item" href="#">Skiing</a></li>
-        <!-- li><hr class="dropdown-divider"></li -->
-      </ul>
-      <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
-    </div>
-  </div>
+<div class="container">
+  <form method="post">
+    {{ form.csrf_token }}
+    <fieldset class="form-select w-25">
+      {{ form.activs.label(class="form-label") }}
+      {{ form.activs(class="form-control", size=5) }}
+    </fieldset>
+    {{ form.submit(class="btn btn-lg btn-primary") }}
+  </form>
 </div>
 
-</html>
+<!-- TODO table of result -->
 
 {% endblock %}
