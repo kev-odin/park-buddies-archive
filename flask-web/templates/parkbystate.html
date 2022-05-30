@@ -56,12 +56,11 @@
             //     marker.setIcon('https://img.icons8.com/nolan/2x/marker.png'); // set image path here...
 
             // });
-            // marker.addListener('click', function () {
-            //     closeOtherInfo();
-            //     infowindow.open(marker.get('map'), marker);
-            //     InforObj[0] = infowindow;
-            //     marker.setIcon('https://img.icons8.com/nolan/2x/marker.png')
-            // });
+            marker.addListener('click', function () {
+                map.setZoom(6);
+                map.setCenter(marker.getPosition())
+            });
+
             marker.addListener('mouseover', function () {
                 closeOtherInfo();
                 infowindow.open(marker.get('map'), marker);
