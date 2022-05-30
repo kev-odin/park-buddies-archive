@@ -1,8 +1,8 @@
-from forms import LoginForm, RegisterForm, SettingsForm, searchForm
+from forms import LoginForm, RegisterForm, SettingsForm, searchForm, ActivitiesForm
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from models import db, login, UserModel
-from nps_api import webcams, parks
+from nps_api import webcams, parks, activities as list_activities
 
 
 app = Flask(__name__)
@@ -83,11 +83,25 @@ def about():
     return render_template("about.html", title=title)
 
 
-@app.route("/activities")
+@app.route("/activities", methods=["GET", "POST"])
 @login_required
 def activities():
-    title = "Park Activities"
-    return render_template("activities.html", title=title)
+    title = "Park by Activities"
+    form = ActivitiesForm()
+    # Canned subset of choices, for reference/troubleshoot:
+    # choices = [
+    #  ('A59947B7-3376-49B4-AD02-C0423E08C5F7', 'Camping'),
+    #  ('AE42B46C-E4B7-4889-A122-08FE180371AE', 'Fishing'),
+    #  ('BFF8C027-7C8F-480B-A5F8-CD8CE490BFBA', 'Hiking'),
+    #  ('F9B1D433-6B86-4804-AED7-B50A519A3B7C', 'Skiing')]
+    choices = list_activities()
+    form.activs.choices = choices
+
+    if form.validate_on_submit():
+        if request.method == "POST":
+            chosen = request.form.getlist("activs")
+            print(f"chosen = {chosen}")
+    return render_template("activities.html", title=title, form=form)
 
 
 @app.route("/webcam")

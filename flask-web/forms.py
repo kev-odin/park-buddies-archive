@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from app_lists import STATE_LIST
 
@@ -46,3 +46,14 @@ class SettingsForm(FlaskForm):
 
     state = SelectField("Select state", choices=STATE_LIST, validators=[DataRequired()])
     submit = SubmitField("Change state")
+
+
+class ActivitiesForm(FlaskForm):
+    """
+    Form to collect parameters for activities search.
+    """
+
+    activs = SelectMultipleField("Activities", validators=[DataRequired()])
+    submit = SubmitField(label="Search")
+
+# END
