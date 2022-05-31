@@ -75,6 +75,15 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
+
+    {% if form %}
+    {% for field, errors in form.errors.items() %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ form[field].label }}: {{ ', '.join(errors) }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
   </div>
 
   {% block content %}
