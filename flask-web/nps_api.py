@@ -14,8 +14,10 @@ def activities():
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
 
-    activites = {x["name"]: x for x in data}
-    return activites
+    # Format as list of tuples (id, name), consistent with wtforms
+    # selectfield choices format, list of tuples (value, label).
+    results = [(_x["id"], _x["name"]) for _x in data]
+    return results
 
 
 def activities_parks():
