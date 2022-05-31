@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-  {% extends "base.html" %} {% set active_page = 'parkbystate' %} {% block title
-  %} Parkbystate {% endblock %} {% block header %}
+  {% extends "base.html" %} {% set active_page = 'parkbystate' %} 
+  {% block title %} {{ title }} {% endblock %}
+  {% block header %}
 
   <style>
     #map {
@@ -95,7 +96,7 @@
   {% endblock %} {% block content %}
 
   <div class="container marketing px-4 py-3">
-    <h2 class="pb-2 border-bottom">Park by state</h2>
+    <h2 class="pb-2 border-bottom">{{ title }}</h2>
     <p>
       Wondering how many national parks in your state? or any other states?
       Simply choose one state and check out all the details including locations,
@@ -265,7 +266,7 @@
             aria-expanded="false"
             aria-controls="panelsStayOpen-collapseThree"
           >
-            List of parks and discriptions
+            List of parks and descriptions
           </button>
         </h2>
         <div

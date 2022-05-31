@@ -177,16 +177,20 @@ def settings():
 def parkbystate():
     title = "Park by State"
     form = searchForm()
+
+    if request.method == "GET":
+        form.state.data = current_user.state
+
     if form.validate_on_submit():
         if request.method == "POST":
             state = request.form["state"]
             return render_template(
-                "parkbystate.html", title=title, myData=parks(str(state)), form=form
-            )  # add WA for Saturday demo only
+                "parkbystate.html", title=title, myData=parks(state_code=state), form=form
+            )
 
     return render_template(
-        "parkbystate.html", myData=parks(current_user.state[0]), form=form
-    )  # should we provide a default state? eg 'WA' or get the user's current state
+        "parkbystate.html",title=title, myData=parks(state_code=current_user.state), form=form
+    )
 
 
 @app.route("/login", methods=["GET", "POST"])

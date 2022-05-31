@@ -1,5 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, SelectMultipleField
+from wtforms import (
+    StringField,
+    PasswordField,
+    SubmitField,
+    BooleanField,
+    SelectField,
+    SelectMultipleField,
+)
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional
 from app_lists import STATE_LIST
 
@@ -65,5 +72,6 @@ class ActivitiesForm(FlaskForm):
 
     activs = SelectMultipleField("Activities", validators=[DataRequired()])
     submit = SubmitField(label="Search")
+
 
 # END
