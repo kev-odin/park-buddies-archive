@@ -35,7 +35,11 @@ class RegisterForm(FlaskForm):
         "Enter password", validators=[DataRequired(), Length(min=6, max=16)]
     )
     password2 = PasswordField(
-        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
+        "Confirm Password",
+        validators=[
+            DataRequired(),
+            EqualTo("password", message="Passwords must match!"),
+        ],
     )
     submit = SubmitField(label="Register")
 
@@ -53,7 +57,7 @@ class SettingsForm(FlaskForm):
     Form to change existing user settings.
     """
 
-    email = StringField("Change email", validators=[Email(), Optional()])
+    email = StringField("Change email", validators=[Email(), DataRequired()])
     state = SelectField("Change state", choices=STATE_LIST, validators=[Optional()])
     new_password = PasswordField(
         label="Change password", validators=[Length(min=6, max=16), Optional()]

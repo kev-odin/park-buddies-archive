@@ -142,13 +142,14 @@ def webcam():
 def settings():
     title = "User Settings"
     form = SettingsForm()
+    x = "DEBUG"
 
     if request.method == "GET":
         form.email.data = current_user.email
         form.state.data = current_user.state
 
-    if form.validate_on_submit():
-        if request.method == "POST":
+    if request.method == "POST":
+        if form.validate_on_submit():
             user = UserModel.query.filter_by(id=current_user.id).first()
             pw = request.form["password"]
 
@@ -165,10 +166,14 @@ def settings():
                     user.set_password(password_change)
 
                 db.session.commit()
-
-            return render_template(
-                "settings.html", title=title, user=current_user, form=form
-            )
+                return render_template(
+                    "settings.html", title=title, user=current_user, form=form
+                )
+            else:
+                flash(
+                    f"Settings not applied. Incorrect credentials for {current_user.email}",
+                    category="warning",
+                )
     return render_template("settings.html", title=title, user=current_user, form=form)
 
 
@@ -185,11 +190,17 @@ def parkbystate():
         if request.method == "POST":
             state = request.form["state"]
             return render_template(
-                "parkbystate.html", title=title, myData=parks(state_code=state), form=form
+                "parkbystate.html",
+                title=title,
+                myData=parks(state_code=state),
+                form=form,
             )
 
     return render_template(
-        "parkbystate.html",title=title, myData=parks(state_code=current_user.state), form=form
+        "parkbystate.html",
+        title=title,
+        myData=parks(state_code=current_user.state),
+        form=form,
     )
 
 
@@ -203,15 +214,20 @@ def login():
             email = request.form["email"]
             pw = request.form["password"]
             user = UserModel.query.filter_by(email=email).first()
-            if user is not None and user.check_password(pw):
+            if user is None:
+                flash(
+                    f"No account found. Please register for an account with our service.",
+                    category="warning",
+                )
+            elif user and not user.check_password(pw):
+                flash(
+                    f"Incorrect password. Please try again.",
+                    category="warning",
+                )
+            elif user and user.check_password(pw):
                 login_user(user)
                 flash(f"Welcome to Park Buddies!", category="success")
                 return redirect(url_for("home"))
-            elif user is not None and not user.check_password(pw):
-                flash(
-                    f"Incorrect email or password. Please try again.",
-                    category="warning",
-                )
     return render_template("login.html", title=title, form=form)
 
 
@@ -233,7 +249,7 @@ def register():
                 add_user(email, password, state)
                 flash("Registration successful.", category="success")
                 return redirect(url_for("login"))
-            elif user is not None and user.check_password(password):
+            elif user and user.check_password(password):
                 login_user(user)
                 flash("Registered account found.", category="success")
                 return redirect(url_for("home"))
