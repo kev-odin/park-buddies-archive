@@ -142,7 +142,6 @@ def webcam():
 def settings():
     title = "User Settings"
     form = SettingsForm()
-    x = "DEBUG"
 
     if request.method == "GET":
         form.email.data = current_user.email
@@ -268,14 +267,22 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template("404.html"), 404
+@app.errorhandler(401)
+def forbidden(e):
+    title = "Unauthorized Access"
+    return render_template("401.html", title=title), 401
 
 
 @app.errorhandler(403)
 def access_denied(e):
-    return render_template("403.html"), 403
+    title = "Forbidden Access"
+    return render_template("403.html", title=title), 403
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    title = "Page Not Found"
+    return render_template("404.html", title=title), 404
 
 
 if __name__ == "__main__":
