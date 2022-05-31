@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-  {% extends "base.html" %} {% set active_page = 'parkbystate' %} 
-  {% block title %} {{ title }} {% endblock %}
-  {% block header %}
+  {% extends "base.html" %} {% set active_page = 'parkbystate' %} {% block title
+  %} {{ title }} {% endblock %} {% block header %}
 
   <style>
     #map {
@@ -11,87 +10,87 @@
     }
   </style>
   <script>
-    var map;
-    var InforObj = [];
-    var centerCords = {
-      lat: 41.500000,
-      lng: -100.000000
-    };
+        var map;
+        var InforObj = [];
+        var centerCords = {
+          lat: 41.500000,
+          lng: -100.000000
+        };
 
-    var markersOnMap = [
-{% for park in myData.values() %}
-      { placeName: "{{park['fullName']}}",
-        text: "{{park['address']}}",
-        LatLng: [{
-          lat: {{ park['latitude']}},
-          lng: {{ park['longitude']}}
-        }]
-      },
-{% endfor %}
-    ];
+        var markersOnMap = [
+    {% for park in myData.values() %}
+          { placeName: "{{park['fullName']}}",
+            text: "{{park['address']}}",
+            LatLng: [{
+              lat: {{ park['latitude']}},
+              lng: {{ park['longitude']}}
+            }]
+          },
+    {% endfor %}
+        ];
 
-    window.onload = function () {
-      initMap();
-    };
+        window.onload = function () {
+          initMap();
+        };
 
-    function addMarkerInfo() {
-      for (var i = 0; i < markersOnMap.length; i++) {
-          var contentString = '<div id="content"><h5>' + markersOnMap[i].placeName +
-              '</h5><p>' + markersOnMap[i].text + '</p></div>';
+        function addMarkerInfo() {
+          for (var i = 0; i < markersOnMap.length; i++) {
+              var contentString = '<div id="content"><h5>' + markersOnMap[i].placeName +
+                  '</h5><p>' + markersOnMap[i].text + '</p></div>';
 
-          const marker = new google.maps.Marker({
-              position: markersOnMap[i].LatLng[0],
-              map: map,
-              icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+              const marker = new google.maps.Marker({
+                  position: markersOnMap[i].LatLng[0],
+                  map: map,
+                  icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+              });
+
+              const infowindow = new google.maps.InfoWindow({
+                  content: contentString,
+                  maxWidth: 200
+              });
+
+              // google.maps.event.addListener(marker, "click", function() {
+              //     marker.setIcon('https://img.icons8.com/nolan/2x/marker.png'); // set image path here...
+
+              // });
+              marker.addListener('click', function () {
+                  map.setZoom(6);
+                  map.setCenter(marker.getPosition())
+              });
+
+              marker.addListener('mouseover', function () {
+                  closeOtherInfo();
+                  infowindow.open(marker.get('map'), marker);
+                  InforObj[0] = infowindow;
+                  marker.setIcon('https://img.icons8.com/nolan/2x/marker.png')
+              });
+              marker.addListener('mouseout', function () {
+                  closeOtherInfo();
+                  infowindow.close();
+                  InforObj[0] = infowindow;
+                  marker.setIcon('https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png')
+              });
+          }
+        }
+
+        function closeOtherInfo() {
+          if (InforObj.length > 0) {
+            /* detach the info-window from the marker ... undocumented in the API docs */
+            InforObj[0].set("marker", null);
+            /* and close it */
+            InforObj[0].close();
+            /* blank the array */
+            InforObj.length = 0;
+          }
+        }
+
+        function initMap() {
+          map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 3,
+            center: centerCords
           });
-
-          const infowindow = new google.maps.InfoWindow({
-              content: contentString,
-              maxWidth: 200
-          });
-
-          // google.maps.event.addListener(marker, "click", function() {
-          //     marker.setIcon('https://img.icons8.com/nolan/2x/marker.png'); // set image path here...
-
-          // });
-          marker.addListener('click', function () {
-              map.setZoom(6);
-              map.setCenter(marker.getPosition())
-          });
-
-          marker.addListener('mouseover', function () {
-              closeOtherInfo();
-              infowindow.open(marker.get('map'), marker);
-              InforObj[0] = infowindow;
-              marker.setIcon('https://img.icons8.com/nolan/2x/marker.png')
-          });
-          marker.addListener('mouseout', function () {
-              closeOtherInfo();
-              infowindow.close();
-              InforObj[0] = infowindow;
-              marker.setIcon('https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png')
-          });
-      }
-    }
-
-    function closeOtherInfo() {
-      if (InforObj.length > 0) {
-        /* detach the info-window from the marker ... undocumented in the API docs */
-        InforObj[0].set("marker", null);
-        /* and close it */
-        InforObj[0].close();
-        /* blank the array */
-        InforObj.length = 0;
-      }
-    }
-
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 3,
-        center: centerCords
-      });
-      addMarkerInfo();
-    }
+          addMarkerInfo();
+        }
   </script>
   {% endblock %} {% block content %}
 
@@ -100,7 +99,7 @@
     <p>
       Wondering how many national parks in your state? or any other states?
       Simply choose one state and check out all the details including locations,
-      driving information, and history more!
+      driving information, history and more!
     </p>
   </div>
 
