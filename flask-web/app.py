@@ -115,6 +115,8 @@ def about():
 def activities():
     title = "Park by Activities"
     form = ActivitiesForm()
+
+    # Available choices, structured as required for SelectField
     # Canned subset of choices, for reference/troubleshoot:
     # choices = [
     #  ('A59947B7-3376-49B4-AD02-C0423E08C5F7', 'Camping'),
@@ -124,11 +126,37 @@ def activities():
     choices = list_activities()
     form.activs.choices = choices
 
+    # Most recent selections, as needed to generate results table.
+    # TODO dict obtained by filtering choices against get_list["activs"]
+    chosen = {
+        'A59947B7-3376-49B4-AD02-C0423E08C5F7': 'Camping',
+        'AE42B46C-E4B7-4889-A122-08FE180371AE': 'Fishing'
+    }
+
+    # Default selections, as required for SelectMultipleField.
+    # TODO either from most sselections, else from user prefs
+    form.activs.data = [chosen.keys()]
+
+    # results = None
+    results = [
+        {"Park": "Jellystone",
+         'Camping': True,
+         'Fishing': False},
+        {"Park": "Atlantis",
+         'Camping': False,
+         'Fishing': True},
+    ]
+
     if form.validate_on_submit():
         if request.method == "POST":
             chosen = request.form.getlist("activs")
+            chosen = dict([(x, choices[x]) for x in chosen])
             print(f"chosen = {chosen}")
-    return render_template("activities.html", title=title, form=form)
+            # TODO query NPS parks/activities
+            # TODO massage into results
+    return render_template("activities.html", title=title,
+                           form=form, chosen=chosen,
+                           results=results)
 
 
 @app.route("/webcam")
