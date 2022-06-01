@@ -3,6 +3,7 @@
 {% block title %} {{title}} {% endblock %}
 {% block content %}
 
+<!-- banner -->
 <div class="container marketing px-4 py-5">
   <h2 class="pb-2 border-bottom">Activities</h2>
   <p>Do All The Things! A park is not just a destination. Rather, each park is a launchpad
@@ -11,6 +12,7 @@
   or even just a quiet spot to watch birds, opportunities abound. </p>
 </div>
 
+<!-- search form -->
 <div class="container">
   <form method="post">
     {{ form.csrf_token }}
@@ -22,6 +24,29 @@
   </form>
 </div>
 
-<!-- TODO table of result -->
+<!-- table of results -->
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Park</th>
+            {% for activ in chosen.values() %}
+            <th scope="col">{{ activ }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for park in results %}
+            <tr>
+                <td class="align-middle">{{ park['Park'] }}</td>
+                {% for activ in chosen.values() %}
+                <td class="align-middle">{{ park[activ] }}</td>
+                {% endfor %}
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}
