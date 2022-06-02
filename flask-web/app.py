@@ -44,6 +44,7 @@ def index():
         "Gunicorn": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Gunicorn_logo_2010.svg/320px-Gunicorn_logo_2010.svg.png",
         "Amazon Web Services": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/320px-Amazon_Web_Services_Logo.svg.png",
         "National Park Service": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Logo_of_the_United_States_National_Park_Service.svg/184px-Logo_of_the_United_States_National_Park_Service.svg.png",
+        "Stack Overflow": "https://upload.wikimedia.org/wikipedia/commons/0/02/Stack_Overflow_logo.svg"
     }
     return render_template("index.html", title=title, tech=technology_dict)
 
@@ -80,9 +81,9 @@ def about():
             "gif": "https://media.giphy.com/media/l1J9DoKrzHMW8fP3O/giphy.gif",
             "endpoint": "webcam",
             "feat": [
-                "User login, registration, and setting pages",
-                "National Park API and webcam page",
-                "Docker and general Bootstrap templates",
+                "User login, registration, and setting",
+                "National Park API and webcams",
+                "Docker and Bootstrap",
             ],
         },
         "Xingguo Huang": {

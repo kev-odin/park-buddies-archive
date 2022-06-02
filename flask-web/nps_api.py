@@ -141,6 +141,7 @@ def _webcam_scrub(park_cams: dict):
     """
     ref_parks = parks()
     new_dict = {key: ref_parks[key] for key in park_cams.keys() if key in ref_parks}
+    x = 0
 
     for key, value in park_cams.items():
         new_images = new_dict[key]["images"]
