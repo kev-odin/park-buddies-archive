@@ -27,12 +27,24 @@ def activities_parks(ids: str = None, qry: str = None):
         dict: all activities codified by NPS with associated parks
     """
     global params
+    request_url = base_url + "activities/parks"
     p = params.copy()
     if ids is not None and ids != "":
-        p["id"] = ids
+        # XXX gross workaround: NPS API requires that multiple "id" values
+        # be passed as a single string formatted as comma-separated list;
+        # it does not support the standard alternative of multiple "id" params.
+        # Meanwhile, Python requests library insists on URL-encoding everything
+        # in params dict; and furthermore, thinks comma needs to be encoded.
+        # This encoding can be circumvented by including query-string in URL.
+        # Additional params can still be specified and will be correctly
+        # appended with ampersand instead of question-mark.
+        # p["id"] = ids
+        request_url = f"{request_url}?id={','.join(ids)}"
     if qry is not None and qry != "":
         p["q"] = qry
-    request_url = base_url + "activities/parks"
+    req = requests.Request('GET', request_url, params=p)
+    r = req.prepare()
+    print(f"req url = {r.url}")
     response = requests.get(request_url, params=p)
     data = response.json()["data"]
 
