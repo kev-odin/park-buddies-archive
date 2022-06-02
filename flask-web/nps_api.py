@@ -42,9 +42,6 @@ def activities_parks(ids: str = None, qry: str = None):
         request_url = f"{request_url}?id={','.join(ids)}"
     if qry is not None and qry != "":
         p["q"] = qry
-    req = requests.Request('GET', request_url, params=p)
-    r = req.prepare()
-    print(f"req url = {r.url}")
     response = requests.get(request_url, params=p)
     data = response.json()["data"]
 
@@ -76,7 +73,6 @@ def activities_parks(ids: str = None, qry: str = None):
     results = {}
     for activ in data:
         a_name = activ["name"]
-        print(f"a_name = {a_name}")
         for park in activ["parks"]:
             p_id = park["parkCode"]
             if p_id not in results:

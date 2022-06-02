@@ -147,11 +147,11 @@ def activities():
     elif form.validate_on_submit():
         chosen_ids = request.form.getlist("activs")
         chosen = dict([x for x in choices if x[0] in chosen_ids])
-        print(f"chosen = {chosen}")
+        # print(f"chosen = {chosen}")
         query_ids = ",".join(chosen_ids)
-        print(f"query_ids = {query_ids}")
+        # print(f"query_ids = {query_ids}")
         results = activities_parks(ids=query_ids)
-        print(f"results = {results}")
+        # print(f"results = {results}")
     return render_template("activities.html", title=title,
                            form=form, chosen=chosen, results=results)
 
