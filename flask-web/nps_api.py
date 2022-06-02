@@ -14,24 +14,67 @@ def activities():
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
 
-    # Format as list of tuples (id, name), consistent with wtforms
-    # selectfield choices format, list of tuples (value, label).
+    # Restructure as list of tuples (id, name), consistent with wtforms
+    # SelectField choices, i.e. list of tuples (value, label).
     results = [(_x["id"], _x["name"]) for _x in data]
     return results
 
 
-def activities_parks():
+def activities_parks(ids: str = None, qry: str = None):
     """Retrieve national parks that are related to particular categories of activity (astronomy, hiking, wildlife watching, etc.).
 
     Returns:
         dict: all activities codified by NPS with associated parks
     """
+    global params
+    p = params.copy()
+    if ids is not None and ids != "":
+        p["id"] = ids
+    if qry is not None and qry != "":
+        p["q"] = qry
     request_url = base_url + "activities/parks"
-    response = requests.get(request_url, params=params)
+    response = requests.get(request_url, params=p)
     data = response.json()["data"]
 
-    activities_parks = {x["name"]: x for x in data}
-    return activities_parks
+    # Response data structure is... inconvenient:
+    # [ { id: <Activity1_id>, name: <Activity1_name>, parks:
+    #     [ { parkCode: <Park1_code>, fullName: <Park1_name>, ... },
+    #       { parkCode: <Park2_code>, fullName: <Park2_name>, ... },
+    #       ... ] },
+    #   { id: <Activity2_id>, name: <Activity2_name>, parks:
+    #     [ { parkCode: <ParkX_code>, fullName: <ParkX_name>, ... },
+    #     [ { parkCode: <ParkY_code>, fullName: <ParkY_name>, ... },
+    #       ... ] },
+    #   ... ]
+    # Parks info is repeated under every actiity applicable to it.
+    #
+    # Restructure to something more convenient, a dict of dicts:
+    # { <Park1_code>: { "Name": <Park1_name>,
+    #                   <Activity1_name>: <bool>,
+    #                   <Activity2_name>: <bool>,
+    #                   ... },
+    #   <Park2_code>: { "Name": <Park2_name>,
+    #                   <Activity1_name>: <bool>,
+    #                   ... },
+    #   ... }
+    #
+    # A more compact representation is certainly possible,
+    # but the above strikes a reasonable balance.
+    a_names = [x["name"] for x in data]
+    results = {}
+    for activ in data:
+        a_name = activ["name"]
+        print(f"a_name = {a_name}")
+        for park in activ["parks"]:
+            p_id = park["parkCode"]
+            if p_id not in results:
+                results[p_id] = {"Name": park["fullName"]}
+            results[p_id][a_name] = True
+    for a_name in a_names:
+        for p_id in results.keys():
+            if a_name not in results[p_id]:
+                results[p_id][a_name] = False
+    return results
 
 
 def parks(state_code: str = None, park_code: str = None):
@@ -110,3 +153,4 @@ if __name__ == "__main__":
     test2 = parks()
     test3 = webcams()
 
+# END

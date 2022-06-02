@@ -74,7 +74,8 @@ class ActivitiesForm(FlaskForm):
     Form to collect parameters for activities search.
     """
 
-    activs = SelectMultipleField("Activities", validators=[DataRequired()])
+    # activs = SelectMultipleField("Activities", validators=[DataRequired()])
+    activs = SelectMultipleField("Activities", validators=[Optional()])
     submit = SubmitField(label="Search")
 
 

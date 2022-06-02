@@ -36,9 +36,9 @@
         </tr>
         </thead>
         <tbody>
-        {% for park in results %}
+        {% for park in results.values() %}
             <tr>
-                <td class="align-middle">{{ park['Park'] }}</td>
+                <td class="align-middle">{{ park['Name'] }}</td>
                 {% for activ in chosen.values() %}
                 <td class="align-middle">{{ park[activ] }}</td>
                 {% endfor %}
