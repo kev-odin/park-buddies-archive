@@ -2,7 +2,7 @@ from forms import LoginForm, RegisterForm, SettingsForm, searchForm, ActivitiesF
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from models import db, login, UserModel
-from nps_api import webcams, parks, activities as list_activities
+from nps_api import webcams, parks, activities as list_activities, activities_parks
 
 
 app = Flask(__name__)
@@ -116,7 +116,7 @@ def activities():
     form = ActivitiesForm()
 
     # Available choices, structured as required for SelectField
-    # Canned subset of choices, for reference/troubleshoot:
+    # Canned example, a subset of the full set offered by API:
     # choices = [
     #  ('A59947B7-3376-49B4-AD02-C0423E08C5F7', 'Camping'),
     #  ('AE42B46C-E4B7-4889-A122-08FE180371AE', 'Fishing'),
@@ -125,37 +125,35 @@ def activities():
     choices = list_activities()
     form.activs.choices = choices
 
-    # Most recent selections, as needed to generate results table.
-    # TODO dict obtained by filtering choices against get_list["activs"]
-    chosen = {
-        'A59947B7-3376-49B4-AD02-C0423E08C5F7': 'Camping',
-        'AE42B46C-E4B7-4889-A122-08FE180371AE': 'Fishing'
-    }
+    # Subset of choices, as needed to both query the API (by id)
+    # and to generate results table (by name).
+    # Note structure here is dict, rather than list of tuples.
+    # Canned example:
+    # chosen = {
+    #     'A59947B7-3376-49B4-AD02-C0423E08C5F7': 'Camping',
+    #     'AE42B46C-E4B7-4889-A122-08FE180371AE': 'Fishing'}
+    chosen = {}
 
-    # Default selections, as required for SelectMultipleField.
-    # TODO either from most sselections, else from user prefs
-    form.activs.data = [chosen.keys()]
+    # Results from query of API, restructured for convenience.
+    # Canned example:
+    # results = {
+    #   'jlst': { 'Name': 'Jellystone', 'Camping': True,  'Fishing': False },
+    #   'atls': { 'Name': 'Atlantis',   'Camping': False, 'Fishing': True  }}
+    results = {}
 
-    # results = None
-    results = [
-        {"Park": "Jellystone",
-         'Camping': True,
-         'Fishing': False},
-        {"Park": "Atlantis",
-         'Camping': False,
-         'Fishing': True},
-    ]
-
-    if form.validate_on_submit():
-        if request.method == "POST":
-            chosen = request.form.getlist("activs")
-            chosen = dict([(x, choices[x]) for x in chosen])
-            print(f"chosen = {chosen}")
-            # TODO query NPS parks/activities
-            # TODO massage into results
+    if request.method == "GET":
+        chosen_ids = chosen.keys()
+        form.activs.data = chosen_ids
+    elif form.validate_on_submit():
+        chosen_ids = request.form.getlist("activs")
+        chosen = dict([x for x in choices if x[0] in chosen_ids])
+        print(f"chosen = {chosen}")
+        query_ids = ",".join(chosen_ids)
+        print(f"query_ids = {query_ids}")
+        results = activities_parks(ids=query_ids)
+        print(f"results = {results}")
     return render_template("activities.html", title=title,
-                           form=form, chosen=chosen,
-                           results=results)
+                           form=form, chosen=chosen, results=results)
 
 
 @app.route("/webcam")
