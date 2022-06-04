@@ -1,3 +1,4 @@
+from typing import Optional
 import requests
 
 base_url = f"https://developer.nps.gov/api/v1/"
@@ -14,24 +15,40 @@ def activities():
     response = requests.get(request_url, params=params)
     data = response.json()["data"]
 
-    # Format as list of tuples (id, name), consistent with wtforms
-    # selectfield choices format, list of tuples (value, label).
+    # Restructure as list of tuples (id, name), consistent with wtforms
+    # SelectField choices, i.e. list of tuples (value, label).
     results = [(_x["id"], _x["name"]) for _x in data]
     return results
 
 
-def activities_parks():
-    """Retrieve national parks that are related to particular categories of activity (astronomy, hiking, wildlife watching, etc.).
+def activities_parks(ids: Optional[list[str]], qry: str = None) -> list:
+    """Retrieve national parks that are related to particular categories
+    of activity (astronomy, hiking, wildlife watching, etc.).
 
     Returns:
         dict: all activities codified by NPS with associated parks
     """
-    request_url = base_url + "activities/parks"
-    response = requests.get(request_url, params=params)
-    data = response.json()["data"]
+    if not ids and (not qry or qry == ''):
+        return []
 
-    activities_parks = {x["name"]: x for x in data}
-    return activities_parks
+    global params
+    request_url = base_url + "activities/parks"
+    p = params.copy()
+    if ids is not None and ids != "":
+        # XXX gross workaround: NPS API requires that multiple "id" values
+        # be passed as a single string formatted as comma-separated list;
+        # it does not support the standard alternative of multiple "id" params.
+        # Meanwhile, Python requests library insists on URL-encoding everything
+        # in params dict; and furthermore, thinks comma needs to be encoded.
+        # This encoding can be circumvented by including query-string in URL.
+        # Additional params can still be specified and will be correctly
+        # appended with ampersand instead of question-mark.
+        # p["id"] = ids
+        request_url = f"{request_url}?id={','.join(ids)}"
+    if qry is not None and qry != "":
+        p["q"] = qry
+    response = requests.get(request_url, params=p)
+    return response.json()["data"]
 
 
 def parks(state_code: str = None, park_code: str = None):
@@ -110,3 +127,4 @@ if __name__ == "__main__":
     test2 = parks()
     test3 = webcams()
 
+# END

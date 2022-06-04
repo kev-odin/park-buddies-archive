@@ -2,7 +2,7 @@ from forms import LoginForm, RegisterForm, SettingsForm, searchForm, ActivitiesF
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import current_user, login_user, login_required, logout_user
 from models import db, login, UserModel
-from nps_api import webcams, parks, activities as list_activities
+from nps_api import webcams, parks, activities as list_activities, activities_parks
 
 
 app = Flask(__name__)
@@ -55,12 +55,12 @@ def home():
     title = "Home App"
     services = {
         "Activities": {
-            "image": "yakko_50states_384x384.jpg",
+            "image": "goofy_camping_500x500.jpg",
             "btn": "Find your activities",
             "endpoint": "activities",
         },
         "Parks by State": {
-            "image": "goofy_camping_500x500.jpg",
+            "image": "yakko_50states_384x384.jpg",
             "btn": "Find your parks",
             "endpoint": "parkbystate",
         },
@@ -110,12 +110,62 @@ def about():
     return render_template("about.html", title=title, profile=profiles, site=site)
 
 
+def _activs_parks_remix(data) -> dict:
+    """
+    Response data structure is... inconvenient:
+    [ { id: <Activity1_id>, name: <Activity1_name>, parks:
+        [ { parkCode: <Park1_code>, fullName: <Park1_name>, ... },
+          { parkCode: <Park2_code>, fullName: <Park2_name>, ... },
+          ... ] },
+      { id: <Activity2_id>, name: <Activity2_name>, parks:
+        [ { parkCode: <ParkX_code>, fullName: <ParkX_name>, ... },
+        [ { parkCode: <ParkY_code>, fullName: <ParkY_name>, ... },
+          ... ] },
+      ... ]
+    Parks info is repeated under every actiity applicable to it.
+
+    Restructure to something more convenient, a dict of dicts:
+    { <Park1_code>: { "Name": <Park1_name>,
+                      <Activity1_name>: <bool>,
+                      <Activity2_name>: <bool>,
+                      ... },
+      <Park2_code>: { "Name": <Park2_name>,
+                      <Activity1_name>: <bool>,
+                      ... },
+      ... }
+
+    A more compact representation is certainly possible,
+    but the above strikes a reasonable balance.
+    """
+    results = {}
+    if None:
+        return results
+
+    a_names = [x["name"] for x in data]
+    for activ in data:
+        a_name = activ["name"]
+        p_list = []
+        for park in activ["parks"]:
+            p_id = park["parkCode"]
+            p_list.append(p_id)
+            if p_id not in results:
+                results[p_id] = {"Name": park["fullName"]}
+            results[p_id][a_name] = True
+    for a_name in a_names:
+        for p_id in results.keys():
+            if a_name not in results[p_id]:
+                results[p_id][a_name] = False
+    return results
+
+
 @app.route("/activities", methods=["GET", "POST"])
 @login_required
 def activities():
     title = "Park by Activities"
     form = ActivitiesForm()
-    # Canned subset of choices, for reference/troubleshoot:
+
+    # Available choices, structured as required for SelectField
+    # Canned example, a subset of the full set offered by API:
     # choices = [
     #  ('A59947B7-3376-49B4-AD02-C0423E08C5F7', 'Camping'),
     #  ('AE42B46C-E4B7-4889-A122-08FE180371AE', 'Fishing'),
@@ -124,11 +174,32 @@ def activities():
     choices = list_activities()
     form.activs.choices = choices
 
-    if form.validate_on_submit():
-        if request.method == "POST":
-            chosen = request.form.getlist("activs")
-            print(f"chosen = {chosen}")
-    return render_template("activities.html", title=title, form=form)
+    # Subset of choices, as needed to both query the API (by id)
+    # and to generate results table (by name).
+    # Note structure here is dict, rather than list of tuples.
+    # Canned example:
+    # chosen = {
+    #     'A59947B7-3376-49B4-AD02-C0423E08C5F7': 'Camping',
+    #     'AE42B46C-E4B7-4889-A122-08FE180371AE': 'Fishing'}
+    chosen = {}
+
+    # Results from query of API, restructured for convenience.
+    # Canned example:
+    # results = {
+    #   'jlst': { 'Name': 'Jellystone', 'Camping': True,  'Fishing': False },
+    #   'atls': { 'Name': 'Atlantis',   'Camping': False, 'Fishing': True  }}
+    results = {}
+
+    if request.method == "GET":
+        chosen_ids = chosen.keys()
+        form.activs.data = chosen_ids
+    elif form.validate_on_submit():
+        chosen_ids = request.form.getlist("activs")
+        chosen = dict([x for x in choices if x[0] in chosen_ids])
+        data = activities_parks(ids=chosen_ids)
+        results = _activs_parks_remix(data)
+    return render_template("activities.html", title=title,
+                           form=form, chosen=chosen, results=results)
 
 
 @app.route("/webcam")
