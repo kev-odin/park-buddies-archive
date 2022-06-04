@@ -110,7 +110,7 @@ def about():
     return render_template("about.html", title=title, profile=profiles, site=site)
 
 
-def _activs_parks_remix(data) -> dict:
+def _activs_parks_xform(data):
     """
     Response data structure is... inconvenient:
     [ { id: <Activity1_id>, name: <Activity1_name>, parks:
@@ -124,37 +124,40 @@ def _activs_parks_remix(data) -> dict:
       ... ]
     Parks info is repeated under every actiity applicable to it.
 
-    Restructure to something more convenient, a dict of dicts:
-    { <Park1_code>: { "Name": <Park1_name>,
-                      <Activity1_name>: <bool>,
-                      <Activity2_name>: <bool>,
-                      ... },
-      <Park2_code>: { "Name": <Park2_name>,
-                      <Activity1_name>: <bool>,
-                      ... },
-      ... }
+    Restructure to something more convenient:
+    [ { "id": <Park1_code>,
+        "name": <Park1_name>,
+        "acts": { <Activity1_name>: <bool>,
+                  <Activity2_name>: <bool>,
+                  ... }},
+      { "id": <Park2_code>,
+        "name": <Park2_name>,
+        "acts": { <Activity1_name>: <bool>,
+                  ... }},
+      ... ]
 
     A more compact representation is certainly possible,
     but the above strikes a reasonable balance.
     """
-    results = {}
-    if None:
-        return results
+    if data is None:
+        return None
 
+    r = {}
     a_names = [x["name"] for x in data]
     for activ in data:
         a_name = activ["name"]
-        p_list = []
         for park in activ["parks"]:
             p_id = park["parkCode"]
-            p_list.append(p_id)
-            if p_id not in results:
-                results[p_id] = {"Name": park["fullName"]}
-            results[p_id][a_name] = True
+            if p_id not in r:
+                r[p_id] = {"name": park["fullName"], "acts": {}}
+            r[p_id]["acts"][a_name] = True
     for a_name in a_names:
-        for p_id in results.keys():
-            if a_name not in results[p_id]:
-                results[p_id][a_name] = False
+        for p_id in r.keys():
+            if a_name not in r[p_id]["acts"]:
+                r[p_id]["acts"][a_name] = False
+
+    results = [{'id': k, 'name': v['name'], 'acts': v["acts"]} for k, v in r.items()]
+    print (f"results = {r}")
     return results
 
 
@@ -197,7 +200,13 @@ def activities():
         chosen_ids = request.form.getlist("activs")
         chosen = dict([x for x in choices if x[0] in chosen_ids])
         data = activities_parks(ids=chosen_ids)
-        results = _activs_parks_remix(data)
+        results = _activs_parks_xform(data)
+        # First sort by name
+        r2 = sorted(results, key=lambda x: x["name"])
+        results = r2
+        # Then by largest match subset
+        r2 = sorted(results, key=lambda x: -len([1 for a in x["acts"].values() if a]))
+        results = r2
     return render_template("activities.html", title=title,
                            form=form, chosen=chosen, results=results)
 
