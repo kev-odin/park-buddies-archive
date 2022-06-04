@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% set active_page = 'activities' %}
 {% block title %} {{title}} {% endblock %}
+{% block header %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+{% endblock %}
 {% block content %}
 
 <!-- banner -->
 <div class="container marketing px-4 py-5">
   <h2 class="pb-2 border-bottom">Activities</h2>
-  <p>Do All The Things! A park is not just a destination. Rather, each park is a launchpad
+  <p> Do All The Things!</p>
+  <p> A park is not just a destination. Rather, each park is a launchpad
   to a unique set of activities that engage with the features of the park.
   Whether you are after advanced mountain climbing, a convenient fishing hole,
   or even just a quiet spot to watch birds, opportunities abound. </p>
@@ -40,7 +44,11 @@
             <tr>
                 <td class="align-middle">{{ park['Name'] }}</td>
                 {% for activ in chosen.values() %}
-                <td class="align-middle">{{ park[activ] }}</td>
+                <td class="align-middle">
+                  {% if park[activ] %}
+                  <span class="bi-check-circle-fill" style="color:green;font-size:larger"></span>
+                  {% endif %}
+                </td>
                 {% endfor %}
             </tr>
 

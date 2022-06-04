@@ -55,12 +55,12 @@ def home():
     title = "Home App"
     services = {
         "Activities": {
-            "image": "yakko_50states_384x384.jpg",
+            "image": "goofy_camping_500x500.jpg",
             "btn": "Find your activities",
             "endpoint": "activities",
         },
         "Parks by State": {
-            "image": "goofy_camping_500x500.jpg",
+            "image": "yakko_50states_384x384.jpg",
             "btn": "Find your parks",
             "endpoint": "parkbystate",
         },
@@ -110,6 +110,54 @@ def about():
     return render_template("about.html", title=title, profile=profiles, site=site)
 
 
+def _activs_parks_remix(data) -> dict:
+    """
+    Response data structure is... inconvenient:
+    [ { id: <Activity1_id>, name: <Activity1_name>, parks:
+        [ { parkCode: <Park1_code>, fullName: <Park1_name>, ... },
+          { parkCode: <Park2_code>, fullName: <Park2_name>, ... },
+          ... ] },
+      { id: <Activity2_id>, name: <Activity2_name>, parks:
+        [ { parkCode: <ParkX_code>, fullName: <ParkX_name>, ... },
+        [ { parkCode: <ParkY_code>, fullName: <ParkY_name>, ... },
+          ... ] },
+      ... ]
+    Parks info is repeated under every actiity applicable to it.
+
+    Restructure to something more convenient, a dict of dicts:
+    { <Park1_code>: { "Name": <Park1_name>,
+                      <Activity1_name>: <bool>,
+                      <Activity2_name>: <bool>,
+                      ... },
+      <Park2_code>: { "Name": <Park2_name>,
+                      <Activity1_name>: <bool>,
+                      ... },
+      ... }
+
+    A more compact representation is certainly possible,
+    but the above strikes a reasonable balance.
+    """
+    results = {}
+    if None:
+        return results
+
+    a_names = [x["name"] for x in data]
+    for activ in data:
+        a_name = activ["name"]
+        p_list = []
+        for park in activ["parks"]:
+            p_id = park["parkCode"]
+            p_list.append(p_id)
+            if p_id not in results:
+                results[p_id] = {"Name": park["fullName"]}
+            results[p_id][a_name] = True
+    for a_name in a_names:
+        for p_id in results.keys():
+            if a_name not in results[p_id]:
+                results[p_id][a_name] = False
+    return results
+
+
 @app.route("/activities", methods=["GET", "POST"])
 @login_required
 def activities():
@@ -148,11 +196,8 @@ def activities():
     elif form.validate_on_submit():
         chosen_ids = request.form.getlist("activs")
         chosen = dict([x for x in choices if x[0] in chosen_ids])
-        # print(f"chosen = {chosen}")
-        query_ids = ",".join(chosen_ids)
-        # print(f"query_ids = {query_ids}")
-        results = activities_parks(ids=query_ids)
-        # print(f"results = {results}")
+        data = activities_parks(ids=chosen_ids)
+        results = _activs_parks_remix(data)
     return render_template("activities.html", title=title,
                            form=form, chosen=chosen, results=results)
 
