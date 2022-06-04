@@ -40,12 +40,12 @@
         </tr>
         </thead>
         <tbody>
-        {% for park in results.values() %}
+        {% for park in results %}
             <tr>
-                <td class="align-middle">{{ park['Name'] }}</td>
+                <td class="align-middle">{{ park['name'] }}</td>
                 {% for activ in chosen.values() %}
                 <td class="align-middle">
-                  {% if park[activ] %}
+                  {% if park["acts"][activ] %}
                   <span class="bi-check-circle-fill" style="color:green;font-size:larger"></span>
                   {% endif %}
                 </td>
