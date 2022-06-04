@@ -201,7 +201,12 @@ def activities():
         chosen = dict([x for x in choices if x[0] in chosen_ids])
         data = activities_parks(ids=chosen_ids)
         results = _activs_parks_xform(data)
-        # results = sorted(results, key=_match_count)
+        # First sort by name
+        r2 = sorted(results, key=lambda x: x["name"])
+        results = r2
+        # Then by largest match subset
+        r2 = sorted(results, key=lambda x: -len([1 for a in x["acts"].values() if a]))
+        results = r2
     return render_template("activities.html", title=title,
                            form=form, chosen=chosen, results=results)
 
