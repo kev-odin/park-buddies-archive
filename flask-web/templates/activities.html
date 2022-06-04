@@ -27,11 +27,12 @@
   </form>
 </div>
 
+{% if results %}
 <!-- table of results -->
-<div class="container">
+<div class="container py-5">
     <table class="table table-striped">
         <thead>
-        <tr>
+        <tr style="position:sticky;top:0;background-color:white">
             <th scope="col">Park</th>
             {% for activ in chosen.values() %}
             <th scope="col">{{ activ }}</th>
@@ -55,5 +56,6 @@
         </tbody>
     </table>
 </div>
+{% endif %}
 
 {% endblock %}
