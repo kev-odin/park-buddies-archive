@@ -16,7 +16,7 @@ services:
     # Volume will need to be mapped to where your /static folder is on
     # your personal instance. (Left side of the colon : )
     volumes:
-      - "$(PWD)/506-capstone/flask-web/static:/static"
+      - "/home/ubuntu/aws_share/506-capstone/flask-web/static:/static"
     ports:
       - "80:80"
     depends_on:
