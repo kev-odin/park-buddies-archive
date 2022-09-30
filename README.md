@@ -1,4 +1,4 @@
-# 506-capstone
+# Park Buddies
 
 Repository to host our final project for the GC-SDE.
 
