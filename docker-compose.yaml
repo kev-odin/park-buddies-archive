@@ -1,23 +1,16 @@
 version: '3'
 
+networks:
+  my_cool_network:
+    name: my_cool_network
+
 services:
   flask_app:
     container_name: flask-web
     restart: always
     build: ./flask-web
+    networks:
+      - my_cool_network
     ports:
       - "8000:8000"
     command: gunicorn -w 1 -b 0.0.0.0:8000 wsgi:app
-
-  nginx:
-    container_name: nginx
-    restart: always
-    build: ./nginx
-    # Volume will need to be mapped to where your /static folder is on
-    # your personal instance. (Left side of the colon : )
-    volumes:
-      - "/home/ubuntu/aws_share/506-capstone/flask-web/static:/static"
-    ports:
-      - "80:80"
-    depends_on:
-      - flask_app  
